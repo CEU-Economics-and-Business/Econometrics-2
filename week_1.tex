@@ -176,15 +176,14 @@ Office: Budapest campus, Nador 13, 507
 
 
 \begin{frame}
-\frametitle{TA Sessions and Problem Sets}
+\frametitle{Problem Sets}
 \begin{itemize}
-\item Six TA sessions
 \item Problem sets:
 \begin{itemize}
 \item Replication of estimates from published papers
 \item Practice questions from the past exams
 \end{itemize}
-\item You are encouraged to work in groups, but every student hands in individual solutions
+\item Work in groups, submit one solution per group.
 \item Solutions have to be turned in at specified dates (via Moodle)
 \end{itemize}
 \end{frame}
@@ -192,12 +191,13 @@ Office: Budapest campus, Nador 13, 507
 
 
 \begin{frame}
-\frametitle{Stata}
+\frametitle{Stata and TA Sessions}
 \begin{itemize}
 \item CEU lab
 \item Problem sets will use Stata
 \item You are supposed to have good knowledge of Stata from Econometrics 1
 \item First TA session will brush up your Stata and data wrangling skills
+\item Six TA sessions in total
 \end{itemize}
 \end{frame}
 
@@ -311,144 +311,37 @@ Talk to us about your topic before submitting the proposal.
 Hard and costly to obtain
     \begin{itemize}
     \item Controlled laboratory experiment 
-    \item Randomized controlled trials
+    \item Randomized controlled trials (RCTs)
     \end{itemize}
-Give one extra year of education to a randomly selected group and compare means in the treatment and control group.
- Due to randomization the extra year is unrelated to parents education, neighbourhood income, etc
+Give an extra year of education to a random group and compare means in the treatment and control group.
+
+Randomization $\Rightarrow$ the extra year is unrelated to parental education, income, etc.
+
  \end{frame}
 
- 
- \begin{frame}
-\frametitle{Non-experimental data - Observational data}
-	
-    \begin{itemize}
-    \item Cross sectional data - sample of units taken at a given point in time, random sampling
-    \item Time series data - one variable observed over time, observations in general not independent over time
-    \item Pooled cross sections
-    \item Panel data - a cross section of individual time series
-    \end{itemize}
-People choose to go to university. Choice depends on other factors affecting wage. Difficult to unbundle effects.
-Try to find variation of years of schooling which is random. Try to account for other factors: controls.
-\end{frame}
 
-
- 
-\begin{frame}
-\frametitle{Statistical Models of Shoe and Leather}
-Freedman, David A. (1991) "Statistical Models and Shoe Leather", Sociological Methodology, 21, 291-313
-\bigskip
-
-John Snow studies of the cholera epidemics in Europe in the 19th century and proves that cholera is a waterborne infectious disease
-
+\begin{frame}{Why using experiments?}
+Example: Do hospitals make people healthier?
 \begin{itemize}
-  \item In the $19^{th}$ century no microbiology, limited microscopes
-  \item Theory: diseases result from "poison in the air" - miasma
-  \item Cholera shows up in Europe in epidemic waves
-  \item Snow studied spatial pattern of epidemics along tracks of human commerce
-  \item Influence of water supply on incidence of cholera?
-\end{itemize}
-\end{frame}
-
-%\frame{ \frametitle{}
-%\begin{center}
-%\begin{figure}
-%\includegraphics[width=0.8\linewidth]{graphs/detective.png}
-%\end{figure}
-%\end{center}
-%}
-
-\begin{frame}
-\frametitle{Is cholera a waterborne or an airborne disease?}
-
-London in the 1800's: different water companies serve different areas
-
-\begin{itemize}
-  \item Some companies take water from the Thames polluted by sewage
-  \item 2 companies
-  \begin{itemize}
-  \item Southwark \& Vauxhall: downstream from sewage discharges
-  \item Lambeth: intake point upstream
-  \end{itemize}
-
-  \item Both companies served the same parts of London during the 1853-54 cholera epidemic
-  \item Sometimes houses next to each other in the same street were served by the 2 different companies
-    \begin{itemize}
-
-  \item Each company supplies rich and poor, large and small houses, no difference in condition or occupation
-  \end{itemize}
-  \item Idea: compare number of cholera victims
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Method of Shoe and Leather}
-
-\begin{itemize}
-  \item Snow surveyed houses in large parts of London
-  \item Water company
-  \item Cholera victims
-  \item 300,000 households involved
-  \item Reward: clear result
-\end{itemize}
-\end{frame}
-
- \frame{ \frametitle{}
-\begin{center}
-\begin{figure}
-\includegraphics[width=1\linewidth]{graphs/SnowMap_Points.png}
-\end{figure}
-\end{center}
- }
- 
-
- 
-
- 
-\frame{ \frametitle{}
-\begin{center}
-\begin{figure}[t]
-\includegraphics[width=1.1\linewidth]{graphs/freedman_tab1.pdf}
-\end{figure}
-\end{center}
- }
-
-\begin{frame}
-\frametitle{The Experimental Ideal}
-
-Social experiment is the most influential research design. Why?
-\bigskip
-
-Solves Selection Problem
-\end{frame}
-
-   \frame{ \frametitle{Cameron et al (2016): RCT in
-Development Economics}
-\begin{center}
-\begin{figure}[t]
-\includegraphics[width=1.0\linewidth]{graphs/rct_economics.png}
-\end{figure}
-\end{center}
- }
-
-\begin{frame}{Do hospitals make people healthier?}
-\begin{itemize}
+  
   \item Compare health status of people who were treated in hospital with those not treated in the average population
   \item Get data from National Health Interview Survey (NHIS)
   \item "During the last month, did you stay in hospital overnight?" Yes/No
   \item "Your health is": Excellent (1), very good (2), good (3), fair (4), poor (5)
-  \item Selection: who is hospitalized?
+  \includegraphics[width=1.1\linewidth]{graphs/ap_health.pdf}
 \end{itemize}
+Selection: who is hospitalized? \textbf{An experiment would take care of this selection issue}
 \end{frame}
 
 
-
-\frame{ \frametitle{}
-\begin{center}
-\begin{figure}[t]
-\includegraphics[width=1.1\linewidth]{graphs/ap_health.pdf}
-\end{figure}
-\end{center}
- }
+\frame{ \frametitle{Cameron et al (2016): RCT in
+		Development Economics}
+	\begin{center}
+		\begin{figure}[t]
+			\includegraphics[width=1.0\linewidth]{graphs/rct_economics.png}
+		\end{figure}
+	\end{center}
+}
 
    \begin{frame}
 \frametitle{Potential Outcome Model}
@@ -621,6 +514,108 @@ If $X_i$ uncorrelated with $D_i$, including them will not affect estimate of $\r
 \end{figure}
 \end{center}
  }
+
+
+ \begin{frame}
+\frametitle{Non-experimental data - Observational data}
+
+\begin{itemize}
+	\item Cross sectional data - sample of units taken at a given point in time, random sampling
+	\item Time series data - one variable observed over time, observations in general not independent over time
+	\item Pooled cross sections
+	\item Panel data - a cross section of individual time series
+\end{itemize}
+People choose to go to university. Choice depends on other factors affecting wage. Difficult to unbundle effects.
+Try to find variation of years of schooling which is random. Try to account for other factors: controls.
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Statistical Models and Shoe Leather}
+Freedman, David A. (1991) "Statistical Models and Shoe Leather", Sociological Methodology, 21, 291-313
+\bigskip
+
+John Snow studies of the cholera epidemics in Europe in the 19th century and proves that cholera is a waterborne infectious disease
+
+\begin{itemize}
+\item In the $19^{th}$ century no microbiology, limited microscopes
+\item Theory: diseases result from "poison in the air" - miasma
+\item Cholera shows up in Europe in epidemic waves
+\item Snow studied spatial pattern of epidemics along tracks of human commerce
+\item Influence of water supply on incidence of cholera?
+\end{itemize}
+\end{frame}
+
+%\frame{ \frametitle{}
+%\begin{center}
+%\begin{figure}
+%\includegraphics[width=0.8\linewidth]{graphs/detective.png}
+%\end{figure}
+%\end{center}
+%}
+
+\begin{frame}
+\frametitle{Detective work, dealing with circumstancial evidence}
+\begin{itemize}
+	\item Who was the first case in the early London epidemic? Any links to the second case?
+	\item One building is affected, a building next to it is not. Why?
+	\item A brewery in the epicenter is not affected. Why?
+	\item Snow surveyed houses in large parts of London
+	\item Water company
+	\item Cholera victims
+	\item 300,000 households involved
+\end{itemize}
+\end{frame}
+
+\frame{ \frametitle{}
+\begin{center}
+	\begin{figure}
+		\includegraphics[width=1\linewidth]{graphs/SnowMap_Points.png}
+	\end{figure}
+\end{center}
+}
+
+\begin{frame}
+\frametitle{Is cholera a waterborne or an airborne disease?}
+
+London in the 1800's: different water companies serve different areas
+
+\begin{itemize}
+\item Some companies take water from the Thames polluted by sewage
+\item 2 companies
+\begin{itemize}
+\item Southwark \& Vauxhall: downstream from sewage discharges
+\item Lambeth: intake point upstream
+\end{itemize}
+
+\item Both companies served the same parts of London during the 1853-54 cholera epidemic
+\item Sometimes houses next to each other in the same street were served by the 2 different companies
+\begin{itemize}
+
+\item Each company supplies rich and poor, large and small houses, no difference in condition or occupation
+\end{itemize}
+\item Idea: compare number of cholera victims
+\end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+\frame{ \frametitle{}
+\begin{center}
+\begin{figure}[t]
+\includegraphics[width=1.1\linewidth]{graphs/freedman_tab1.pdf}
+\end{figure}
+\end{center}
+}
+
+\begin{frame}
+\includegraphics[width=\textwidth]{graphs/monsters_thames.jpg}
+\end{frame}
 \end{document}
 
 
