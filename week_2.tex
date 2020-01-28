@@ -99,7 +99,7 @@ symbols}{} \setbeamertemplate{headline}[default]
 \newcounter{endbs}
 \title[Linear Regression]{Econometrics 2 (Part 1)}
 
-\author[Lychagin  \& Mu\c co]{Arieda Mu\c co}
+\author[Lychagin  \& Mu\c co]{Sergey Lychagin}
 \institute[CEU]{Central European University}
 \date{Winter 2020}
 
@@ -141,7 +141,7 @@ symbols}{} \setbeamertemplate{headline}[default]
 
 $X_i, Y_i$   ... random variables
 
-$x_i, y_i \;\;\;i=1,...N$ sample of random draws
+$x_i, y_i \;\;\;i=1,...n$ sample of random draws
 
 \begin{itemize}
 \item[1. Step] Describe the \emph{statistical} relationship between $X_i$ and $Y_i$
@@ -225,11 +225,11 @@ First order condition gives
 \alpha &=& E\left[Y_i \right] - \beta E\left[X_i \right]
 \end{eqnarray*}
 
-Estimator
-\begin{eqnarray*}
-\hat{\beta} &=&\frac {\sum(x_i -\bar{x})(y_i -\bar{y})}{\sum(x_i -\bar{x})^2} \\
-\hat{\alpha} &=& \bar{y} - \beta \bar{x}
-\end{eqnarray*}
+%Estimator
+%\begin{eqnarray*}
+%\hat{\beta} &=&\frac {\sum(x_i -\bar{x})(y_i -\bar{y})}{\sum(x_i -\bar{x})^2} \\
+%\hat{\alpha} &=& \bar{y} - \beta \bar{x}
+%\end{eqnarray*}
 
 \end{frame}
 
@@ -277,115 +277,131 @@ Even if the CEF is not linear, regression provides the best linear approximation
  }
 
 
-%\end{document}
-
-\begin{frame}
-\frametitle{Saturated Models}
+\begin{frame}{Estimation}
+But we only observe a sample $\{x_i, y_i\}_{i=1,\dots,n}$, not the whole population. Approximate expectations with means $\Rightarrow$ OLS estimator:
+\begin{equation*}
+\beta = E\left[X_i  X_i' \right] ^{-1}E\left[X_i  Y_i \right]
+\end{equation*}
+turns into
+\begin{equation*}
+\widehat\beta = \left[\frac{1}{n}\sum_i x_i  x_i' \right] ^{-1}\left[\frac{1}{n}\sum_ix_i  y_i \right]
+\end{equation*}
+OLS is well-behaved: it is \emph{consistent} and \emph{asymptotically normal}:
 \begin{itemize}
-\item Regression models with discrete explanatory variables, where the model includes a separate parameter for all possible values taken on by the explanatory variables.
-\end{itemize}
- Example 1:
-\[\begin{array}{cl}
-    y_{i} &\text{hourly wages} \\
-    s_{i} & \text{schooling, } s_{i}=0,1,...,\tau
-  \end{array}
-\]
-\begin{itemize}
-\item Saturated regression
-\begin{eqnarray*}
-	y_{i} &=& \alpha+\beta_{1}d_{1 i}+...+\beta_{\tau}d_{\tau i}+\epsilon_{i} \\
-  d_{ij} &=& 1\left[s_{i}=j\right]
-\end{eqnarray*}
+	\item $\widehat\beta\to \beta$ if $n\to\infty$
+	\item $\sqrt{n}(\widehat\beta - \beta)\to N[0, V]$ if $n\to\infty$
 \end{itemize}
 \end{frame}
 
-
-
-\begin{frame}
-\frametitle{Saturated Models}
-\begin{itemize}
-\item Dummy variables are indicating each schooling level
-\item $\beta_{j}$ j-th level of schooling effect
-
-\[\begin{array}{cl}
-    \beta_{j}&= E\left[Y_{i}|s_{i}=j\right]-E\left[Y_{i}|s_{i}=0\right]\\
-   \alpha&= E\left[Y_{i}|s_{i}=0\right] \text{, }   s_{i}=0 \text{ (reference group)}
-    \end{array}
-\]
-
-\item One parameter for any possible $j$
-\item Saturated models perfectly fit the CEF
-
-(CEF is linear function of the set of dummy variables)
-\end{itemize}
-\end{frame}
-
-
-
-\begin{frame}
-\frametitle{Saturated Models}
-
-Example 2:
-
-\begin{itemize}
-\item Two explanatory variables: College graduate and Sex
-
-\[
-\begin{array}{cl}
-    y_{i}=\alpha+\beta_{1}coll+\beta_{2}fem+\beta_{3}coll \times female+ \epsilon_{i}
- \end{array}
-\]
-
-
-\item $\beta_{1}$ and $\beta_{2}$ main effects; $\beta_{3}$ interaction term.
-
-\item Other Parametrizations:
-\[
-\begin{array}{cl}
-    y_{i}=\tilde{\beta_{1}}male_{\_}coll+\tilde{\beta_{2}}male_{\_}nocoll+\tilde{\beta_{3}}female_{\_}coll\\
-     +\tilde{\beta_{4}} female_{\_}nocoll
-    \end{array}
-\]
-
-
-\item CEF has four possible values: $x_{1i}$ college and $x_{2i}$ female
-
-\[
-\begin{array}{cl}
-E\left[Y_{i}|x_{1i}=0, x_{2i}=0\right]= & \alpha\\
-E\left[Y_{i}|x_{1i}=1, x_{2i}=0\right]= & \alpha+\beta_{1}\\
-E\left[Y_{i}|x_{1i}=0, x_{2i}=1\right]= & \alpha+\beta_{2}\\
-E\left[Y_{i}|x_{1i}=1, x_{2i}=1\right]= & \alpha+\beta_{1}+\beta_{2}+\beta_{3}
- \end{array}
-\]
-\end{itemize}
-
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Saturated Models}
-Example 3:
-
-\begin{itemize}
- \item Multivalued schooling and Sex
-  \[
-  \begin{array}{cl}
-    y_{i}= \alpha+\sum_{j=1}^{\tau} \beta_{j} d_{ij}+ \gamma x_{2i}+\sum_{j=1}^{\tau}  \delta_{j} \left( d_{ij}\times x_{2i} \right)+\epsilon_{i}
-    \end{array}
-    \]
-  \item CEF has $\left(\tau+1\right)\times 2$ values
-  \item Saturated Model exactly fits CEF
-  \item Increasingly restrictive model: omitting some interactions\\
- e.g: Return to schooling is same for men and women
- \item But often models do not make sense! e.g:
-\begin{eqnarray*}
-y_{i}= \alpha+ x_{2i}+ \sum \delta_{j}\left(d_{ji}\times x_{2i}\right)+ \epsilon_{i}
-\end{eqnarray*}
- different returns to schooling levels \emph{only} for women
-\end{itemize}
-\end{frame}
-
+%%\end{document}
+%
+%\begin{frame}
+%\frametitle{Saturated Models}
+%\begin{itemize}
+%\item Regression models with discrete explanatory variables, where the model includes a separate parameter for all possible values taken on by the explanatory variables.
+%\end{itemize}
+% Example 1:
+%\[\begin{array}{cl}
+%    y_{i} &\text{hourly wages} \\
+%    s_{i} & \text{schooling, } s_{i}=0,1,...,\tau
+%  \end{array}
+%\]
+%\begin{itemize}
+%\item Saturated regression
+%\begin{eqnarray*}
+%	y_{i} &=& \alpha+\beta_{1}d_{1 i}+...+\beta_{\tau}d_{\tau i}+\epsilon_{i} \\
+%  d_{ij} &=& 1\left[s_{i}=j\right]
+%\end{eqnarray*}
+%\end{itemize}
+%\end{frame}
+%
+%
+%
+%\begin{frame}
+%\frametitle{Saturated Models}
+%\begin{itemize}
+%\item Dummy variables are indicating each schooling level
+%\item $\beta_{j}$ j-th level of schooling effect
+%
+%\[\begin{array}{cl}
+%    \beta_{j}&= E\left[Y_{i}|s_{i}=j\right]-E\left[Y_{i}|s_{i}=0\right]\\
+%   \alpha&= E\left[Y_{i}|s_{i}=0\right] \text{, }   s_{i}=0 \text{ (reference group)}
+%    \end{array}
+%\]
+%
+%\item One parameter for any possible $j$
+%\item Saturated models perfectly fit the CEF
+%
+%(CEF is linear function of the set of dummy variables)
+%\end{itemize}
+%\end{frame}
+%
+%
+%
+%\begin{frame}
+%\frametitle{Saturated Models}
+%
+%Example 2:
+%
+%\begin{itemize}
+%\item Two explanatory variables: College graduate and Sex
+%
+%\[
+%\begin{array}{cl}
+%    y_{i}=\alpha+\beta_{1}coll+\beta_{2}fem+\beta_{3}coll \times female+ \epsilon_{i}
+% \end{array}
+%\]
+%
+%
+%\item $\beta_{1}$ and $\beta_{2}$ main effects; $\beta_{3}$ interaction term.
+%
+%\item Other Parametrizations:
+%\[
+%\begin{array}{cl}
+%    y_{i}=\tilde{\beta_{1}}male_{\_}coll+\tilde{\beta_{2}}male_{\_}nocoll+\tilde{\beta_{3}}female_{\_}coll\\
+%     +\tilde{\beta_{4}} female_{\_}nocoll
+%    \end{array}
+%\]
+%
+%
+%\item CEF has four possible values: $x_{1i}$ college and $x_{2i}$ female
+%
+%\[
+%\begin{array}{cl}
+%E\left[Y_{i}|x_{1i}=0, x_{2i}=0\right]= & \alpha\\
+%E\left[Y_{i}|x_{1i}=1, x_{2i}=0\right]= & \alpha+\beta_{1}\\
+%E\left[Y_{i}|x_{1i}=0, x_{2i}=1\right]= & \alpha+\beta_{2}\\
+%E\left[Y_{i}|x_{1i}=1, x_{2i}=1\right]= & \alpha+\beta_{1}+\beta_{2}+\beta_{3}
+% \end{array}
+%\]
+%\end{itemize}
+%
+%\end{frame}
+%
+%
+%\begin{frame}
+%\frametitle{Saturated Models}
+%Example 3:
+%
+%\begin{itemize}
+% \item Multivalued schooling and Sex
+%  \[
+%  \begin{array}{cl}
+%    y_{i}= \alpha+\sum_{j=1}^{\tau} \beta_{j} d_{ij}+ \gamma x_{2i}+\sum_{j=1}^{\tau}  \delta_{j} \left( d_{ij}\times x_{2i} \right)+\epsilon_{i}
+%    \end{array}
+%    \]
+%  \item CEF has $\left(\tau+1\right)\times 2$ values
+%  \item Saturated Model exactly fits CEF
+%  \item Increasingly restrictive model: omitting some interactions\\
+% e.g: Return to schooling is same for men and women
+% \item But often models do not make sense! e.g:
+%\begin{eqnarray*}
+%y_{i}= \alpha+ x_{2i}+ \sum \delta_{j}\left(d_{ji}\times x_{2i}\right)+ \epsilon_{i}
+%\end{eqnarray*}
+% different returns to schooling levels \emph{only} for women
+%\end{itemize}
+%\end{frame}
+%
 
 
 
