@@ -293,6 +293,43 @@ OLS is well-behaved: it is \emph{consistent} and \emph{asymptotically normal}:
 \end{itemize}
 \end{frame}
 
+\begin{frame}{OLS is consistent, proof}
+Substitute $y_i = x_i'\beta + e_i$
+\begin{align*}
+\widehat\beta = \left[\frac{1}{n}\sum_i x_i  x_i' \right] ^{-1}\left[\frac{1}{n}\sum_ix_i  y_i\right]
+ = \beta + \left[\frac{1}{n}\sum_i x_i  x_i' \right] ^{-1}\left[\frac{1}{n}\sum_ix_ie_i\right]
+\end{align*}
+Law of large numbers: $\frac{1}{n}\sum_ix_ie_i\stackrel{p}{\to}E[X_i\epsilon_i]$, $\frac{1}{n}\sum_ix_ix'_i\stackrel{p}{\to}E[X_iX_i']$. 
+
+Law of iterated expectations + CEF decomposition property:
+\begin{equation*}
+	E[X_i\epsilon_i] = E[E[X_i\epsilon_i|X_i]] = E[X_iE[\epsilon_i|X_i]]=E[X_i\cdot 0] = 0.
+\end{equation*}
+Continuous mapping theorem: if $f(A_n, B_n)$ is continuous in $(A_n,B_n)$, $A_n\stackrel{p}{\to}a$, $B_n\stackrel{p}{\to}b$, then $f(A_n, B_n)\stackrel{p}{\to}f(a,b)$.
+\bigskip
+
+Therefore, $\left[\frac{1}{n}\sum_i x_i  x_i' \right] ^{-1}\left[\frac{1}{n}\sum_ix_ie_i\right]\to 0$.
+\end{frame}
+
+
+\begin{frame}{OLS is asymptotically normal, proof}
+	How does $\widehat\beta$ behave around its limit?
+	\begin{align*}
+	\sqrt{n}(\widehat\beta - \beta) = \left[\frac{1}{n}\sum_i x_i  x_i' \right] ^{-1}\left[\sqrt{n}\frac{1}{n}\sum_ix_ie_i\right]
+	\end{align*}
+	Central limit theorem: $\sqrt{n}\frac{1}{n}\sum_ix_ie_i\stackrel{d}{\to}N[0,Var(X_i\epsilon_i)]$. 
+	Slutsky's theorem: Let $A_n\stackrel{p}{\to}a$ and $B_n\stackrel{d}{\to}B$. Then, $A_n + B_n \stackrel{d}{\to}a + B$ and $A_nB_n \stackrel{d}{\to}aB$.
+	\bigskip
+	
+	This implies
+	\begin{align*}
+	\sqrt{n}&(\widehat\beta - \beta) \stackrel{d}{\to} N[0, V],\\
+	 &\text{where $V = E[X_iX_i']^{-1}Var(X_i\epsilon_i)E[X_iX_i']^{-1}$}
+	\end{align*}
+	We can use this result to test hypotheses about $\beta$, find standard errors, etc.
+\end{frame}
+
+
 %%\end{document}
 %
 %\begin{frame}
@@ -468,7 +505,7 @@ The conditional independence assumption asserts that conditional on observable v
 \begin{eqnarray*}
   \underbrace{E(Y_i|X_{i}, c_{i}=1)-E(Y_i|X_{i},c_{i}=0)}_{\texttt{observed difference |X}}=\underbrace{E(Y_{1i}-Y_{0i}|X_{i})}_{\texttt{difference in pot outcome |X}}
 \end{eqnarray*}
-
+Agents can select into treatment, but only based on their $X_i$. There is no selection on unobservables associated with $(Y_{0i}, Y_{1i})$.
 \end{frame}
 
 
