@@ -447,17 +447,18 @@ Therefore, $\left[\frac{1}{n}\sum_i x_i  x_i' \right] ^{-1}\left[\frac{1}{n}\sum
 
 \begin {itemize}
 
-\item Regression causal $\Leftrightarrow$ CEF causal
 
+
+\item Interpretation of CEF, causal vs non-causal:
+\begin{itemize}
+	\item Non-causal: What is the average difference in earnings between people with $x+1$ and $x$ years of schooling?
+		\item Causal: What would people earn, on average, if we give them 1 year of schooling holding \emph{all} other characteristics fixed?
+\end{itemize}
+
+\item Regression causal $\Leftrightarrow$ CEF causal
 \item Causal Effect: difference in average \emph{potential outcome}
 \item The CEF is causal if it describes differences in the average potential outcomes for a fixed reference group
 
-\item Examples:
-       \begin{itemize}
-          \item What would a given person earn if she obtained a different schooling level
-          \item What would people earn, on average, if we could change their schooling in a perfectly controlled environment
-\end{itemize}
-\item Remember: in experiments causal variable is independent from potential outcomes
 \end{itemize}
 \end{frame}
 
@@ -468,7 +469,8 @@ Therefore, $\left[\frac{1}{n}\sum_i x_i  x_i' \right] ^{-1}\left[\frac{1}{n}\sum
 Idea:
 \begin{itemize}
 \item \emph{selection on observables}
-\item Causal variable is independent of potential outcome conditional on observable variables $X$ (ability, family,etc.)
+\item Causal variable is independent of potential outcome conditional on observable variables $X$ (ability, family, etc.)
+\item Intuitively, for all individuals with the same $X$, assignment to treatment is as good as random.
 \end{itemize}
 \end{frame}
 
@@ -480,8 +482,9 @@ Idea:
 c_i && \text{College} \\
 Y_i &=& \left\{ \begin{array}{cc}
                                                 Y_{1i} & \text{if}\;\; c_i=1 \\
-                                                Y_{0i} & \text{if}\;\; c_i=0
-                            \end{array} \right.
+                                                Y_{0i} & \text{otherwise}\;\;
+                            \end{array} \right.\\
+                        X_i&& \text{observable controls: family income, age, etc.}
 \end{eqnarray*}
 \begin{itemize}
 \item Causal Effect $Y_{1i}-Y_{0i}$
@@ -503,7 +506,7 @@ The conditional independence assumption asserts that conditional on observable v
 \left\{Y_{0i}, Y_{1i}\right\} \amalg  c_{i}|X_{i}
 \end{eqnarray*}
 \begin{eqnarray*}
-  \underbrace{E(Y_i|X_{i}, c_{i}=1)-E(Y_i|X_{i},c_{i}=0)}_{\texttt{observed difference |X}}=\underbrace{E(Y_{1i}-Y_{0i}|X_{i})}_{\texttt{difference in pot outcome |X}}
+  \underbrace{E(Y_i|X_{i}, c_{i}=1)-E(Y_i|X_{i},c_{i}=0)}_{\text{observed difference |X}}=\underbrace{E(Y_{1i}-Y_{0i}|X_{i})}_{\text{difference in pot outcome |X}}
 \end{eqnarray*}
 Agents can select into treatment, but only based on their $X_i$. There is no selection on unobservables associated with $(Y_{0i}, Y_{1i})$.
 \end{frame}
@@ -577,7 +580,7 @@ linear same relationship for everybody.
     \end{array}
 \]
 
-\item Problem: $s_{i}$ may be correlated with potential outcomes $f_{i}\left(s\right)$, or $\eta_{i}$.
+\item Problem: $s_{i}$ may be correlated with potential outcomes $f_{i}\left(s\right)$ via $\eta_{i}$.
 
 \end{itemize}
 
@@ -588,10 +591,7 @@ linear same relationship for everybody.
 \begin{frame}
 \frametitle{Conditional Independence}
 
- Suppose CIA holds given $X_{i}$
-
- Now we can write
-
+ Suppose CIA holds given $X_{i}$ and the CEF of $\eta_i$ is linear in $X_i$. Then,
 \[\begin{array}{cl}
 
    \eta_{i} =X_{i}^{'}\gamma +v_{i}
@@ -603,7 +603,7 @@ where  $\gamma$ is a vector of population regression coefficients
 important: the residual $v_{i}$ is uncorrelated with $X_{i}$.
 
 \begin{eqnarray*}
-    E\left[f_{i}\left(s\right)|x_{i},s_{i}\right] =E\left[f_{i}\left(s\right)|x_{i}\right]
+    E\left[f_{i}\left(s\right)|X_{i},s_{i}\right] =E\left[f_{i}\left(s\right)|X_{i}\right]
        &=& \alpha+\rho s_i+ E\left[\eta_{i}|X_{i}\right]\\
         &=&\alpha+\rho s_i+ X_{i}^{'}\gamma\\
 \end{eqnarray*}
@@ -631,6 +631,8 @@ Linear causal model:
 \item $v_{i}$ is not correlated with $s_{i}$, or $X_{i}$. $\rho$ represents causal effect.\\
 
 \item Key assumption: the observable variables $X_{i}$ are the only reason that $\eta_{i}$, or $s_{i}$ are correlated (or $f_{i}\left(s\right)$, and $s_{i}$)
+
+\item Note: $\gamma$ is not causal in general!
 \end{itemize}
 
 \end{frame}
@@ -714,30 +716,61 @@ Sign of bias
  }
  
  
+ \begin{frame}{Bad Controls}
+ \begin{itemize}
+ 	\item Control for covariates increases likelihood for a causal interpretation of the main relationship. Should we include any controls?
+ 	\item Caution:
+ 	\begin{itemize}
+ 		\item Bad controls-variables that might themselves be outcomes in the ``thought'' experiment.\\
+ 	\end{itemize}
+ 	
+ 	\item Example:
+ 	\begin{itemize}
+ 		\item Randomly assign college degree (causal effect of mean earnings) \\
+ 		\item Occupation correlated with earnings and education.\\
+ 	\end{itemize}
+ 	
+ 	\item Should we control for occupation? (white collar job)
+ 	
+ \end{itemize}
+ 
+\end{frame}
 
+\begin{frame}{Bad Controls: more formally}
+We relate earnings to the college education dummy. Control for occupation: use the white collar workers only ($W_i = 1$).
+\begin{equation*}
+Y_i = \alpha + \rho C_i + \epsilon_i, \quad\text{for all $i$ such that $W_i=1$}
+\end{equation*}
+Let's apply the potential outcome framework. What is the DGP?
+\begin{enumerate}
+\item Each agent is born with $(Y_{0i}, Y_{1i}, W_{0i}, W_{1i})$ -- wage and occupation for college/no-college state of the world.
+\item Treatment is random (just for the sake of argument!)
+\item If $C_i = 1$, then $Y_i=Y_{1i}$, $W_i=W_{1i}$ and vice versa.
 
-   
-
-\begin{frame}
-\frametitle{Bad Controls}
-\begin{itemize}
-\item Control for covariates increases likelihood for a causal interpretation of the main relationship. Should we include any controls?
-\item Caution:
-      \begin{itemize}
-           \item Bad controls-variables that might themselves be outcomes in the "thought" experiment.\\
-\end{itemize}
-
-\item Example:
-     \begin{itemize}
-         \item Randomly assign college degree (causal effect of mean earnings) \\
-         \item Occupation correlated with earnings and education.\\
-\end{itemize}
-
-\item Should we control for occupation? (white collar job)
-
-\end{itemize}
+\end{enumerate}
+Key issue: occupation is an outcome. Selecting sample based on $W_i$ --- ``endogenous sample selection''.
 
 \end{frame}
+
+\begin{frame}
+Interpret $\rho$ in the potential outcome framework:
+\begin{align*}
+\rho &= E[Y_i|C_i=1, W_i=1] - E[Y_i|C_i=0, W_i=1]\\
+&= E[Y_{1i}|C_i=1, W_{1i}=1] - E[Y_{0i}|C_i=0, W_{0i}=1]\\
+&= E[Y_{1i} - Y_{0i}|C_i=1, W_{1i}=1] \\
+&\phantom{=} + E[Y_{0i}|C_i=1, W_{1i}=1] - E[Y_{0i}|C_i=0, W_{0i}=1]\\
+&= \underbrace{E[Y_{1i} - Y_{0i}| W_{1i}=1]}_\text{effect for the ``white collar after college'' population} \\
+&\phantom{=} + \underbrace{E[Y_{0i}|W_{1i}=1] - E[Y_{0i}| W_{0i}=1]}_\text{selection bias}
+\end{align*}
+Signing selection bias: need to know more on how agents decide on $W_i$. Casual intuition -- likely negative:
+\begin{itemize}
+\item $W_{0i}=1$ -- Mark Zuckerberg and Bill Gates
+\item $W_{1i}=1$ -- median college graduate.
+\end{itemize}
+Note how the potential outcome model made the discussion tractable.
+\end{frame}
+
+
 
 \begin{frame}
 \frametitle{Application: Returns to Computer Use}
@@ -926,23 +959,5 @@ Problem:
 \end{frame}
  
 
-
-
-\begin{frame}
-\frametitle{Bad Controls}
-\begin{itemize}
-\item Compare mean earnings for white color workers with or without college.
-
-\begin{eqnarray*}
-	Y_{i} &=& C_{i}Y_{1i}+ \left(1-C_{i}\right) Y_{0i} \\
-  W_{i} &=& C_{i}W_{1i}+ \left(1-C_{i}\right) W_{0i}
-\end{eqnarray*}
-\begin{eqnarray*}
-E\left[Y_{i}|c_{i}=1\right]-E\left[Y_{i}|c_{i}=0\right]&=& E\left[Y_{1i}-Y_{0i}\right]\\
-E\left[W_{i}|c_{i}=1\right]-E\left[W_{i}|c_{i}=0\right]&=& E\left[W_{1i}-W_{0i}\right]
-\end{eqnarray*}
-\end{itemize}
-
-\end{frame}
 
 \end{document}
