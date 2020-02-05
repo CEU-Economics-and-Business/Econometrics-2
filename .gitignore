@@ -1,0 +1,9 @@
+*.aux
+*.log
+*.out
+*.gz
+*.nav
+*.snm
+*.toc
+*-eps-converted-to.pdf
+week_*.pdf
