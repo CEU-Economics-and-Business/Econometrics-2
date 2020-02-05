@@ -20,6 +20,10 @@
 \usepackage{epsfig}
 \usepackage{array}
 \usepackage{xcolor}
+\usepackage{tikz}
+
+\usetikzlibrary{arrows,positioning} 
+\tikzstyle{arrow} = [thick,->,>=stealth]
 
 \mode<presentation> {
 %\usetheme[left,width=1.7cm]{Berkeley}
@@ -451,7 +455,7 @@ Therefore, $\left[\frac{1}{n}\sum_i x_i  x_i' \right] ^{-1}\left[\frac{1}{n}\sum
 
 \item Interpretation of CEF, causal vs non-causal:
 \begin{itemize}
-	\item Non-causal: What is the average difference in earnings between people with $x+1$ and $x$ years of schooling?
+	\item Non-causal: What is the average difference in earnings between people with $s+1$ and $s$ years of schooling?
 		\item Causal: What would people earn, on average, if we give them 1 year of schooling holding \emph{all} other characteristics fixed?
 \end{itemize}
 
@@ -670,7 +674,7 @@ where $A_{i}$ represents ability, family background.
 \frametitle{Omitted Variables Bias Formula}
 
 \begin{eqnarray*}
-\widehat{\tilde{\rho}}=\frac{Cov\left(Y_{i}, s_{i}\right)}{V\left(s_{i}\right)}=\rho+\gamma^{'}\delta_{As}
+\widehat{\tilde{\rho}}=\frac{Cov\left(Y_{i}, s_{i}\right)}{Var\left(s_{i}\right)}=\rho+\gamma^{'}\delta_{As}
 \end{eqnarray*}
 where $\delta_{As}$ vector of coefficients from regressions of $A_{i}$ on $s_{i}$
 \bigskip
@@ -678,9 +682,9 @@ where $\delta_{As}$ vector of coefficients from regressions of $A_{i}$ on $s_{i}
 coef from short regression = coef from long regression \emph{plus} effect of omitted variables $*$ regression coef of omitted on included variables
 
 \begin{eqnarray*}
-   \frac{Cov\left(Y_{i}, s_{i}\right)}{V\left(s_{i}\right)} &=& \frac{Cov\left(\alpha+\rho s_{i}+ A_{i}^{'}\gamma+e_{i}, s_{i}\right)}{V\left(s_{i}\right)}\\
-    &=&\frac{\rho V\left(s_{i}\right)+\gamma Cov\left(A_{i}, s_{i}\right)}{V\left(s_{i}\right)}\\
-    &=& \rho + \gamma\frac{Cov \left(A_{i}, s_{i}\right)}{V\left(s_{i}\right)}\\
+   \frac{Cov\left(Y_{i}, s_{i}\right)}{Var\left(s_{i}\right)} &=& \frac{Cov\left(\alpha+\rho s_{i}+ A_{i}^{'}\gamma+e_{i}, s_{i}\right)}{Var\left(s_{i}\right)}\\
+    &=&\frac{\rho Var\left(s_{i}\right)+\gamma Cov\left(A_{i}, s_{i}\right)}{Var\left(s_{i}\right)}\\
+    &=& \rho + \gamma\frac{Cov \left(A_{i}, s_{i}\right)}{Var\left(s_{i}\right)}\\
 \end{eqnarray*}
 
 
@@ -714,7 +718,25 @@ Sign of bias
 \end{figure}
 \end{center}
  }
- 
+
+
+\begin{frame}{An (almost) hypothetical case for discussion}
+	\begin{itemize}
+		\item The government of Zubrowka suspects that international university rankings (THE, QS, etc) do not reflect true qualities of domestic universities.
+		\item The following study is commissioned:
+		\begin{itemize}
+			\item A random sample of college graduates working in Zubrowka are surveyed for their wages and last college attended
+			\item The data is used to estimate
+			\begin{equation*}
+				\ln wage_i = \sum_c\alpha_cD_{ci} + \epsilon_i
+			\end{equation*}
+			where $D_{ci}=1$ if person $i$ graduated from college $c$.
+			\item Colleges $c=1,\dots,C$ are ranked according to $\alpha_c$.
+		\end{itemize}
+		\item In this ranking, universities based in Zubrowka are quite competitive: the University of Lutz is ranked between MIT and Oxford.
+	\end{itemize}
+	What do you think about this research design? Do you believe the results? Would you approach this task differently? 
+\end{frame}
  
  \begin{frame}{Bad Controls}
  \begin{itemize}
@@ -802,10 +824,35 @@ Seminal study Krueger (1993)
 
 Problem:
     \begin{itemize}
-        \item Is there any unobservable characteristic $x^{*}$ correlated to computer use?
+        \item Is there any unobservable characteristic $X$ correlated to computer use?
          So that all individuals with this characteristic would earn higher wages anyway?
 \end{itemize}
 
+\end{frame}
+
+\begin{frame}{What's behind the data?}
+	\begin{center}
+		\begin{tikzpicture}[node distance=1cm, auto,]
+		
+		\node(ability) {Ability};
+		\node[right= of ability](skill) {Skill};
+		\node[right= of skill](firm) {Employer};
+		\node[right= of firm](computer) {Computer};
+		\node[below=0.5cm of firm](wage){Wage};
+		
+		\draw[arrow] (ability) -> (skill);
+		\draw[arrow] (skill) -> (firm);
+		\draw[arrow] (firm) -> (computer);
+		\draw[arrow] (ability) to[out=35, in=145](computer);
+		\draw[arrow] (ability) to[out=25, in=155](firm);
+		\draw[arrow] (skill) to[out=35, in=155](computer);
+		\draw[arrow] (ability) -> (wage);
+		\draw[arrow] (skill) -> (wage);
+		\draw[arrow] (firm) -> (wage);
+		\draw[arrow, red] (computer) -> (wage);
+		
+		\end{tikzpicture}
+	\end{center}
 \end{frame}
 
 \frame{ \frametitle{}
