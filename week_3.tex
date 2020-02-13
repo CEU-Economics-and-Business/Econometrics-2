@@ -138,12 +138,12 @@ Today
 \item Omitted Variables Bias
 \end{itemize}
 \begin{itemize}
-
-\item 2 parts:
-      \begin{itemize}
-         \item Restricted model with constant coefficients (Potential outcomes are the same for everybody)\\
-         \item Unrestricted model with heterogenous potential outcomes
-      \end{itemize}
+%
+%\item 2 parts:
+%      \begin{itemize}
+%         \item Restricted model with constant coefficients (Potential outcomes are the same for everybody)\\
+%         \item Unrestricted model with heterogenous potential outcomes
+%      \end{itemize}
 \item Applications:
          \begin{itemize}
            \item Effect of military service on earnings
@@ -164,11 +164,11 @@ Today
 \item Constant Effects Setup
 \begin{eqnarray*}
 	y_{si} &=& f_{i}\left(s\right) \\
-  f_{i}\left(s\right) &=& \alpha+ \rho s_{i}+ \eta_{i} \\
-  \eta_{i}&=& A_{i}^{'}\gamma+ v_{i}
+  f_{i}\left(s\right) &=& \alpha+ \rho s+ \eta_{i} \\
+  \eta_{i} &=& A_{i}^{'}\gamma+v_i,\;E[\eta_i|A_i] = A_i\gamma.
 \end{eqnarray*}
-\item $A_{i}$ are the only reason why $\eta_{i}$ and $s_{i}$ may be correlated.
-\item $\gamma$ population regression coefficients.
+\item $A_{i}$ are the only reason why $\eta_{i}$ and $s_{i}$ may be correlated: $s_i\amalg\eta_i |A_i$.
+\item $\gamma$ --- population regression coefficients (not necessarily causal)
 
 
 \[\begin{array}{cl}
@@ -181,7 +181,7 @@ Today
 
 
 \[\begin{array}{cl}
-   Y_{i} =  \alpha+ \rho s_{i}+ A_{i}^{'}\gamma+\nu_{i} \Rightarrow $Long Regression$
+   Y_{i} =  \alpha+ \rho s_{i}+ A_{i}^{'}\gamma+v_{i} \Rightarrow $Long Regression$
 
     \end{array}
 \]
@@ -231,15 +231,11 @@ Today
 \begin{itemize}
 \item 2 important assumptions:
    \begin {itemize}
-    \item $z_{i}$ has an effect on $s_{i}$. First stage is not zero
-
-     \emph{Relevance}:
-
+    \item \emph{Relevance}: $z_{i}$ has an effect on $s_{i}$ (can be tested)
      \begin{eqnarray*}
             Cov\left(s_{i}, z_{i}\right)\neq 0
       \end{eqnarray*}
-    \item $z_{i}$ has an effect on $Y_{i}$ only through affecting $s_{i}$:
-
+    \item \emph{Exogeneity/exclusion restriction:} $z_{i}$ affects $Y_{i}$ only via $s_{i}$:
      \begin{eqnarray*}
            Cov\left(\eta_{i}, z_{i}\right)= 0
       \end{eqnarray*}
@@ -267,23 +263,21 @@ Today
 \begin{itemize}
 \item Structural Equation
 \begin{eqnarray*}
-  Y_{i} = X_{i}' \alpha+ \rho s_{i}+\eta_{i}
+  Y_{i} = X_{i}' \alpha+ \rho s_{i}+\eta_{i}, \; E[\eta_i|X_i] = 0.
 \end{eqnarray*}
     \begin {itemize}
        \item First Stage:
       \begin{eqnarray*}
-           s_{i}= X_{i}^{'}\pi_{10}+ \pi_{11}z_{i}+ \xi_{1i}
+           s_{i}= X_{i}^{'}\pi_{10}+ \pi_{11}z_{i}+ \xi_{1i}, \; E[\xi_{1i}|X_i, z_i] = 0
       \end{eqnarray*}
-
     \item Reduced Form:
         \begin{eqnarray*}
            Y_{i}= X_{i}^{'}\pi_{20}+ \pi_{21}z_{i}+ \xi_{2i}
       \end{eqnarray*}
 \end {itemize}
-\item $s_{i}$ and $Y_{i}$ are \emph{endogenous variables}
-\item $X_{i}$ and $z_{i}$ are \emph{exogenous variables}
-\item $z_{i}$ instrumental variable
-\item $X_{i}$ exogenous covariates
+\item $s_{i}$ and $Y_{i}$ are \emph{endogenous variables}. 	Fundamental issue: $\xi_{1i}$ correlates with $\eta_i$ (e.g. schooling and wage are driven by unobserved ability).
+\item $z_{i}$ instrumental variable, conditionally  independent of $\eta_i$: $z_i\amalg \eta_i|X_i$.
+\item $X_{i}$ --- controls
 
 \end{itemize}
 \end{frame}
@@ -296,7 +290,7 @@ Today
 \frametitle{Indirect Least Squares}
 
 
- Covariate Adjusted IV estimator:
+Covariate adjusted IV estimator:
 \begin{eqnarray*}
   \rho=\frac{\pi_{21}}{\pi_{11}}=\frac{Cov\left(Y_{i}, \tilde{z_{i}}\right)}{Cov\left(s_{i},\tilde{ z_{i}}\right)}
 \end{eqnarray*}
@@ -304,16 +298,14 @@ Today
 
 
 \item $\tilde{z_{i}}$ residual from regressing $z_{i}$ on $x_{i}$ (regression anatomy)
-\item Indirect Least Squares (ILS) estimator of the causal effect $\rho$ in the model
-\item Structural Equation:
+\item Proof:
 \begin{eqnarray*}
   Y_{i} &=& X_{i}' \alpha+ \rho s_{i}+\eta_{i}  \\
-  \eta_{i}&=& A_{i}^{'}\gamma+ \nu_{i} \\
   Cov\left(Y_{i}, \tilde{z_{i}}\right)&=& \rho Cov\left(s_{i}, \tilde{z_{i}}\right)
 \end{eqnarray*}
       \begin {itemize}
      \item $\tilde{z_{i}}$ uncorrelated with $X_{i}$ by construction.
-     \item $\tilde{z_{i}}$ uncorrelated with $\eta_{i}$ by assumption.
+     \item $\tilde{z_{i}}$ uncorrelated with $\eta_{i}$ by assumption (easy to check)
 \end {itemize}
 \end {itemize}
 
@@ -487,30 +479,30 @@ s_{i}= X_{i}^{'}\pi_{10}+\pi_{11}z_{1i}+\pi_{12}z_{2i}+\pi_{13}z_{3i}+\xi_{i1}
 
 \end {itemize}
 \end {frame}
-
-\begin{frame}
-\frametitle{Applications}
-
-\begin{itemize}
-\item Effects of veteran status on earnings
-	\begin{itemize}
-		\item Does serving in the military have an impact on earnings later in life?
-		\item Instrument: Vietnam war draft lottery  (Angrist,1990)
-	\end{itemize}
-\item Effects of family size on female labor supply (Angrist and Evans, 1998)
-	\begin{itemize}
-		\item Instrument: Multiple births, sex composition
-	\end{itemize}
-\item Returns to schooling
-	\begin{itemize}
-		\item Ability bias or sorting based on returns to schooling?
-		\item Instrument: Quarter of birth (Angrist and Krueger, 1991)
-		\item Instrument: Proximity to college (Card, 1993)
-	\end{itemize}
-
-\end{itemize}
-
-\end{frame}
+%
+%\begin{frame}
+%\frametitle{Applications}
+%
+%\begin{itemize}
+%\item Effects of veteran status on earnings
+%	\begin{itemize}
+%		\item Does serving in the military have an impact on earnings later in life?
+%		\item Instrument: Vietnam war draft lottery  (Angrist,1990)
+%	\end{itemize}
+%\item Effects of family size on female labor supply (Angrist and Evans, 1998)
+%	\begin{itemize}
+%		\item Instrument: Multiple births, sex composition
+%	\end{itemize}
+%\item Returns to schooling
+%	\begin{itemize}
+%		\item Ability bias or sorting based on returns to schooling?
+%		\item Instrument: Quarter of birth (Angrist and Krueger, 1991)
+%		\item Instrument: Proximity to college (Card, 1993)
+%	\end{itemize}
+%
+%\end{itemize}
+%
+%\end{frame}
 
 
 \begin{frame}
