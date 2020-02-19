@@ -538,105 +538,50 @@ s_{i}= X_{i}^{'}\pi_{10}+\pi_{11}z_{1i}+\pi_{12}z_{2i}+\pi_{13}z_{3i}+\xi_{i1}
 \end{figure}
 \end{center}
  }
-\frame{ \frametitle{}
-\begin{center}
-\begin{figure}[t]
-\includegraphics[width=1.0\linewidth]{graphs/ap_tab412.pdf}
-\end{figure}
-\end{center}
- }
+
+
+%\frame{ \frametitle{}
+%\begin{center}
+%\begin{figure}[t]
+%\includegraphics[width=1.0\linewidth]{graphs/ap_tab412.pdf}
+%\end{figure}
+%\end{center}
+% }
  
- \begin{frame}
-\frametitle{Family Size and Female Labor Supply}
+% \begin{frame}
+%\frametitle{Family Size and Female Labor Supply}
+%
+%\begin{itemize}
+%\item Women with more children work less
+%	\begin{itemize}
+%		\item Effect of family size?
+%		\item Selection?
+%	\end{itemize}
+%\item Instrumental variables which exogenously increase family size
+%\item Multiple births 
+%\item Sex composition
+%\end{itemize}
+%
+%\end{frame}
 
-\begin{itemize}
-\item Women with more children work less
-	\begin{itemize}
-		\item Effect of family size?
-		\item Selection?
-	\end{itemize}
-\item Instrumental variables which exogenously increase family size
-\item Multiple births 
-\item Sex composition
-\end{itemize}
-
-\end{frame}
-
- \frame{ \frametitle{}
-\begin{center}
-\begin{figure}[t]
-\includegraphics[width=1.0\linewidth]{graphs/ap_tab414.pdf}
-\end{figure}
-\end{center}
- }
-
-
+% \frame{ \frametitle{}
+%\begin{center}
+%\begin{figure}[t]
+%\includegraphics[width=1.0\linewidth]{graphs/ap_tab414.pdf}
+%\end{figure}
+%\end{center}
+% }
 
 
 
-\begin{frame}
-\frametitle{College Proximity}
-\begin{itemize}
-\item "Using geographic variation in college proximity to estimate the return to education'', Card (1993, NBER WP 4483)
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Data}
-
-\begin{itemize}
-\item National Longitudinal Survey of Youths
-\item Young men age 14-24 in 1966
-\item 1st survey 1966
-	\begin{itemize}
-      \item family composition
-       \item father's, mother's education
-       \item characteristics of local labor market e.g. college
-      \end{itemize}
-\item Follow up surveys every 2 years
-	\begin{itemize}
-      \item large attrition 20\% drop out in first 3 years
-       \item select 1976 interview for labor market information
-       \item education, wages
-      \end{itemize}
-      \end{itemize}
-
-\end{frame}
-
-
-\frame{ \frametitle{}
-\begin{center}
-\begin{figure}[t]
-\includegraphics[width=0.7\linewidth]{graphs/card_tab1.pdf}
-\end{figure}
-\end{center}
- }
- 
- 
- 
- \begin{frame}
-\begin{itemize}
-\item Linear model
-
-\begin{eqnarray*}
-           Y_{i}= \alpha+ \rho s_{i}+ \eta_{i}
-      \end{eqnarray*}
-      \end{itemize}
-\end{frame}
 
 
 
- \frame{ \frametitle{}
-\begin{center}
-\begin{figure}[t]
-\includegraphics[width=0.9\linewidth]{graphs/card_tab2.pdf}
-\end{figure}
-\end{center}
- }
+
 
  
  \begin{frame}
+"Using geographic variation in college proximity to estimate the return to education'', Card (1993, NBER WP 4483)
  \begin{itemize}
 
 \item Ability Bias
@@ -692,15 +637,6 @@ Model
 
 
 
- \frame{ \frametitle{}
-\begin{center}
-\begin{figure}[t]
-\includegraphics[width=1.0\linewidth]{graphs/card_tab3.pdf}
-\end{figure}
-\end{center}
- }
-
-
 \begin{frame}
 \frametitle{Multiple Endogenous Variables}
 \begin{itemize}
@@ -721,39 +657,15 @@ Y_i &=& X_{i}^{'}\pi_{40}+\pi_{41}z_{1i}+\pi_{42}z_{2i}+\pi_{43}z_{3i}+\xi_{4i}\
 \end{itemize}
 \end{frame}
 
-
-
-
-
-
-
-  \frame{ \frametitle{}
-\begin{center}
-\begin{figure}[t]
-\includegraphics[width=1.0\linewidth]{graphs/card_tab4.pdf}
-\end{figure}
-\end{center}
- }
+ \frame{ \frametitle{}
+	\begin{center}
+		\begin{figure}[t]
+			\includegraphics[width=1.0\linewidth]{graphs/card_tab3.pdf}
+		\end{figure}
+	\end{center}
+}
  
  
-\begin{frame}
-\frametitle{Multiple Instruments}
-
-\begin{itemize}
-\item $z_{1i}$ proximity to 4 year college
-\item $z_{2i}$ proximity to 2 year college
-
-\[ \begin{array}{cl}
-s_{i}= X_{i}^{'}\pi_{10}+\pi_{11}z_{1i}+\pi_{12}z_{2i}+\xi_{i1}
-    \end{array}
-\]
-
-\item $\hat{s}_{i}$ fitted values from first stage regression
-
-\item 2SLS "instrument": Residual from a regression of first stage fitted values on exogenous covariates increases efficiency.
-\end{itemize}
-
-\end{frame}
  
 \begin{frame}
 \frametitle{Exclusion restriction}
@@ -768,40 +680,22 @@ s_{i}= X_{i}^{'}\pi_{10}+\pi_{11}z_{1i}+\pi_{12}z_{2i}+\xi_{i1}
 
 \end{frame}
 
-
-\begin{frame}
-\frametitle{Direct effect from college proximity}
-
+\begin{frame}{``Forbidden regression''}
+Common mistake --- ``forbidden regression''
 \begin{itemize}
+	\item Suppose one fits $\widehat{exper}_i$ and $\widehat{s}_i$, runs $Y_i$ on $\widehat{exper}_i$, $\widehat{exper}_i^2$ and $\widehat{s}_i$ rather than on $\widehat{exper}_i$, $\widehat{exper^2}_i$ and $\widehat{s}_i$.
+	\item What the second stage estimates:
+	\begin{align*}
+		Y_i &= \alpha + \rho s_i + \gamma_1 exper_i + \gamma_2 exper_i^2 + \eta_i\\
+		&= \alpha + \rho (\widehat{s}_i + \xi_{1i}) + \gamma_1(\widehat{exper}_i + \xi_{2i}) + \gamma_2 (\widehat{exper}_i + \xi_{2i})^2 + \eta_i\\
+		&= \alpha + \rho \widehat{s}_i + \gamma_1\widehat{exper}_i + \gamma_2 \widehat{exper}_i^2 \\
+		& + \underbrace{(\rho\xi_{1i} + \gamma_1\xi_{2i} + \gamma_2\xi_{2i}^2 + 2\gamma_2\widehat{exper}_i\xi_{2i} + \eta_i)}_{\zeta_i}
+	\end{align*}
 
-\item Idea: college proximity should have a bigger effect on educational choice of low income families 
-\item Instrument for education: $c_i * p_i$ were $p_i$ is an indicator for low parental background
-\item First stage
-\begin{eqnarray*}
-  s_i &=& \pi_{10} + \pi_{11} c_i + \pi_{12} (c_i* p_i) + \pi_{13} exper_i + \pi_{14} exper_i^2 + \xi_{1i}
-\end{eqnarray*}
-\item Earnings Equation
-\begin{eqnarray*}
-  Y_i &=& \alpha + \delta c_i + \rho s_i + \gamma_1 exper_i + \gamma_2 exper_i^2 + \eta_i
-\end{eqnarray*}
-
+	\item RHS variables are likely to correlate with $\zeta_i$ (e.g. if $\xi_{2i}$ is heteroskedastic).
 \end{itemize}
-
+Run three separate 1st stage regressions, don't predict $exper_i$ and $exper_i^2$ using one 1st stage regression. 
 \end{frame}
-
-  \frame{ \frametitle{}
-\begin{center}
-\begin{figure}[t]
-\includegraphics[width=1.0\linewidth]{graphs/card_tab5.pdf}
-\end{figure}
-\end{center}
- }
-
-
-
-
-
-%slide 20
 
 \begin{frame}
 \frametitle{Testing for Endogeneity}
@@ -838,24 +732,12 @@ s_{i}= X_{i}^{'}\pi_{10}+\pi_{11}z_{1i}+\pi_{12}z_{2i}+\xi_{i1}
            s_{i} &=& X_{i}^{'}\pi_{10}+ \pi_{11}z_{i}+ \xi_{1i}
       \end{eqnarray*}
 
-      \item $Cov\left(s_{i}, \xi_{1i}\right)=0$
-
-
-     \begin {itemize}
      \item Predict first stage residual $\hat{\xi}_{1i}$ and include it in structural equation.
-    \end {itemize}
 
 \begin{eqnarray*}
            Y_{i}= X_{i}^{'}\alpha+ \rho s_{i}+ \delta\hat{\xi}_{1i}+ error
       \end{eqnarray*}
-\item Hausman Test:
-     \item Test whether $\delta=0$
-
-\begin{eqnarray*}
-H_{0}: \delta=0
-\end{eqnarray*}
-
-
+\item Hausman Test: Test $H_{0}: \delta=0$
 
 \end{itemize}
 
@@ -878,9 +760,9 @@ H_{0}: \delta=0
 
      \begin{itemize}
        \item Estimate 2SLS using $z_{1}$ and $z_{2}$ and predict residuals $\hat{\eta}_{i}$
-       \item Regress $\hat{\eta}_{i}$ on all exogenous variables and obtain $R^{2}$
+       \item Regress $\hat{\eta}_{i}$ on all exogenous variables ($X$, $z_1$, $z_2$) and obtain $R^{2}$
        \item $H_{0}:$ $z_{1}$ and $z_{2}$ uncorrelated to $\eta_i$
-       \item $nR^{2}\approx\chi^{2}_{q}$, $q=2$, number of instrument
+       \item Under $H_0$,  $nR^{2}\approx\chi^{2}_{q}$, $q=2$, number of instruments
 \end{itemize}
 \end{itemize}
 
@@ -899,6 +781,55 @@ H_{0}: \delta=0
 
 
 \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Using IV to address simultaneity issues}
+Typical application: demand estimation
+\begin{equation}
+	q_i = \alpha - \rho p_i + X_{di}'\beta_d + u_{di}
+\end{equation}
+Identification issue: price $p_i$ is driven by demand shocks $u_{di}$. Using OLS is a bad idea.
+\begin{itemize}
+	\item Typical strategy: use observable supply shifters $X_{si}$ as instruments for $p_i$. Be careful: $X_{si}$ cannot correlate with $u_{di}$!
+	\begin{itemize}
+		\item Exogenous changes in market structure (entry/exit/mergers)
+		\item Fluctuations in wages, prices for inputs
+		\item Disruptions in supply chains
+	\end{itemize}
+	\item Estimating supply: symmetric case; use demand shifters $X_{di}$ as instruments for $q_i$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Weak instruments}
+Suppose we estimate $\rho$ using one exogenous IV:
+\begin{eqnarray*}
+	Y_{i} = \alpha+ \rho s_{i}+\eta_{i}
+\end{eqnarray*}
+\begin{align*}
+	\widehat\rho=\rho + \frac{\frac{1}{n}\sum_i(\eta_{i} - \overline{\eta}_i)(z_{i} - \overline{z}_i)}{\frac{1}{n}\sum_i(s_{i} - \overline{s}_i)(z_{i} - \overline{z}_i)}
+\end{align*}
+LLN+CLT imply that
+\begin{align*}
+\frac{1}{n}\sum_i(\eta_{i} - \overline{\eta}_i)(z_{i} - \overline{z}_i) &= cov(\eta_i, z_i) + \frac{1}{\sqrt{n}}N_1 + o\left(\frac{1}{\sqrt{n}}\right)\\
+\frac{1}{n}\sum_i(s_{i} - \overline{s}_i)(z_{i} - \overline{z}_i) &= cov(s_i, z_i) + \frac{1}{\sqrt{n}}N_2 + o\left(\frac{1}{\sqrt{n}}\right)
+\end{align*}
+where $N_1$ and $N_2$ are two normal random variables.
+\end{frame}
+
+\begin{frame}{Weak instruments}
+	\begin{align*}
+		\widehat\rho=\rho + \frac{\frac{1}{\sqrt{n}}N_1 + o\left(\frac{1}{\sqrt{n}}\right)}
+		{cov(s_i, z_i) + \frac{1}{\sqrt{n}}N_2 + o\left(\frac{1}{\sqrt{n}}\right)}
+	\end{align*}
+
+	\begin{itemize}
+	 	\item In the limit, the denominator $\approx cov(s_i, z_i)$, and then $\widehat\rho\approx\rho + \frac{1}{\sqrt{n}cov(s_i, z_i)}N_1$.
+	 	\item However, in finite (and not necessarily small!) samples, $\frac{1}{\sqrt{n}}N_2$ may dominate $cov(s_i, z_i)$. 
+	 	\item In this case, $\widehat\rho \approx \rho + \frac{N_1}{N_2}$ --- biased point estimate, the distribution of $\widehat\rho$ far from normal.
+	 	\item This may happen even if $z_i$ appears significant at the conventional levels in the 1st stage.
+	 \end{itemize}
+	There is more on this at the Friday's seminar (how bad the bias can be, how to test properly). Stay tuned!
 \end{frame}
 
 
