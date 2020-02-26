@@ -1,0 +1,494 @@
+\documentclass[beamer,compress]{beamer}
+
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage[absolute,overlay]{textpos}
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+%\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\small\raggedright\arraybackslash}X}
+\usepackage{graphicx}
+\usepackage{bigstrut}
+\usepackage{tikz}
+\usepackage{mathrsfs}
+\usepackage{epsfig}
+\usepackage{array}
+%\usepackage{natbib}
+
+\mode<presentation> {
+%\usetheme[left,width=1.7cm]{Berkeley}
+%\usetheme{default}
+\usetheme{Boadilla}
+  \usecolortheme[RGB={103,102,204}]{structure}
+%\usecolortheme{dove}
+  \useoutertheme{infolines}
+  \setbeamercovered{transparent}
+ }
+
+%\renewcommand{\familydefault}{cmss}
+%\renewcommand{\mathrm}{\mathsf}
+%\renewcommand{\textrm}{\textsf}
+\usefonttheme{serif}
+\newcommand{\plim}{\mathrm{\,plim\,}}
+\newcommand{\mean}{\mathrm{\,mean\,}}
+\newcommand{\htn}{\hat{\theta}_{n}}
+\newcommand{\mysp}{\hspace{2em}}
+
+\newcommand{\X}{{\mathbf{X}}}
+\newcommand{\x}{{\mathbf{x}}}
+\newcommand{\E}{\mathsf{E}}
+\newcommand{\V}{\mathsf{Var}}
+\setbeamercolor{bibliography entry title}{fg=black} \setbeamercolor{bibliography entry author}{fg=black} \setbeamercolor{subsection in
+toc}{fg=structure} 
+\setbeamercolor{palette primary}{bg=structure, fg=white}
+%\setbeamercolor{palette secondary}{bg=structure, fg=black}
+%\setbeamercolor{palette tertiary}{bg=structure, fg=black}
+\setbeamercolor{caption name}{fg=black} \setbeamersize{text margin left=.8cm} \setbeamersize{text margin right=1cm}
+\hypersetup{linkbordercolor={1 0 0}} \setbeamertemplate{navigation symbols}{} \setbeamertemplate{headline}[default]
+
+\setbeamertemplate{enumerate items}[default]
+
+\newcounter{transfct}
+\newcounter{begbs}
+\newcounter{endbs}
+\title[Matching Methods]{Econometrics 2}
+\subtitle{Matching Methods and Propensity Scores}
+\author[Lychagin \& Mu\c co]{Sergey Lychagin}
+\institute[CEU]{Central European University}
+\date{Winter 2020} 
+
+
+
+\begin{document}
+
+\frame{\titlepage}
+
+
+
+\begin{frame}{Review}
+\begin{itemize}
+  \item What is the potential outcome model for a binary treatment $D$ and outcome $Y$?
+  \item How is the treatment effect defined in the potential outcome model?
+  \item Can we estimate an individual treatment effect?
+  \item If we have control variables $X$, what is the conditional independence assumption (CIA)?
+\end{itemize}
+\end{frame}
+
+%\begin{frame}{Outline}
+%\begin{enumerate}
+%\item Matching as non-liner alternative for estimating the treatment effect under the CIA
+%\item Propensity Score Theorem
+%\item Practical propensity score and matching estimators
+%\item Applications
+%\end{enumerate}
+%\end{frame}
+
+\frame{ \frametitle{Estimation of Treatment Effects}
+Suppose we have a binary treatment model with treatment variable $D_i$ and potential outcomes $\{Y_{1i},Y_{0i}\}$. In addition,
+we have a number of control variables in $X_i$. Suppose further that the CIA holds
+\begin{equation*}
+    \{Y_{1i},Y_{0i}\} \perp D_i|X_i
+\end{equation*}
+How can we estimate the treatment effect $E\left[Y_{i}|X_i, D_i=1\right]-E\left[Y_{i}|X_i, D_i=0\right]=E\left[Y_{1i}-Y_{0i}|X_i\right]$?
+\begin{itemize}
+  \item linear regression approximates $E\left[Y_{i}|X_i,D_i \right]$
+  \item TODAY: non-linear alternatives
+\end{itemize}
+ }
+
+\frame{ \frametitle{What are we estimating?}
+Average Treatment Effect
+\begin{align*}
+	\delta_{ATE} &= E\left[Y_{1i}-Y_{0i}\right] \\
+	 &= E\{ E\left[Y_{1i}-Y_{0i}|X_i\right]\}
+\end{align*}
+Average Treatment Effect on the Treated
+\begin{align*}
+\delta_{TOT} &= E\left[Y_{1i}-Y_{0i}|D_i=1\right] \\
+&= E\{ E\left[Y_{1i}-Y_{0i}|X_i\right]|D_i=1\}
+\end{align*}
+
+ }
+
+\frame{ \frametitle{Matching Estimators}
+Define $\delta_X$ as
+\begin{equation*}
+  \delta_X := E\left[Y_{i}|X_i, D_i=1\right]-E\left[Y_{i}|X_i, D_i=0\right]
+\end{equation*}
+Matching estimators for ATE and TOT are given by
+\begin{eqnarray*}
+   \delta_{TOT} &=& \sum_{x} \delta_X P\left(X_i=x|D_i=1\right) \\
+   \delta_{ATE} &=& \sum_{x} \delta_X P\left(X_i=x \right)
+\end{eqnarray*}
+(to make things simple, assume $X$ is discrete).\\
+$P\left(X_i=x \right)$ and $P\left(X_i=x|D_i=1\right)$ can be seen as different weights for combining the effects $\delta_X$.
+ }
+
+\frame{ \frametitle{Example}
+We are interested in the effect of smoking on mortality. Evaluation strategy: compare mortality rates of smokers and non-smokers.
+Available covariate: Age groups. Selection problem: mean age of smokers $<$ mean age of non-smokers
+\begin{tabular}{|l|c|c|c|c|}
+  \hline
+  Age & Smokers & Non-Smokers & \# obs & \# Smokers \\ \hline
+  $<$30 & $\bar{Y}_{S,30}$ & $\bar{Y}_{N,30}$ & $n_1$ & $ns_1$ \\
+  30-40 & $\bar{Y}_{S,40}$ & $\bar{Y}_{N,40}$ & $n_2$ & $ns_2$ \\
+  40-50 & $\bar{Y}_{S,50}$ & $\bar{Y}_{N,50}$ & $n_3$ & $ns_3$ \\
+  $>$50 & $\bar{Y}_{S,60}$ & $\bar{Y}_{N,60}$ & $n_4$ & $ns_4$ \\
+  \hline
+\end{tabular}
+\begin{eqnarray*}
+   \delta_{TOT} &=& (\bar{Y}_{S,30}-\bar{Y}_{N,30})\frac{ns_1}{NS}+(\bar{Y}_{S,40}-\bar{Y}_{N,40})\frac{ns_2}{NS}+ ...  \\
+   \delta_{ATE} &=& (\bar{Y}_{S,30}-\bar{Y}_{N,30})\frac{n_1}{N}+(\bar{Y}_{S,40}-\bar{Y}_{N,40})\frac{n_2}{N}+ ...
+\end{eqnarray*}
+This allows for \textbf{arbitrary}, nonlinear relationship between $\delta_X$ and $X$.
+ }
+
+\frame{
+\begin{enumerate}
+	\item{We \textbf{matched} observations based on $X$.}
+	\item{We estimated $\delta_X$ for each $X$.}
+	\item{We put the estimates together to form $\delta_{ATE}$ and $\delta_{TOT}$.}
+\end{enumerate}
+
+Questions:
+\begin{enumerate}
+	\item{Why bother? Why is this better than linear regression + OLS?}
+	\item{What if $X$ is so multidimensional that we have too few obs. in each cell (or some cells) to estimate $\delta_X$?}
+\end{enumerate}
+}
+
+\frame{ \frametitle{Matching and Regression}
+	Define as $d_{ix}=1\left[X_i=x \right]$ a dummy variable indicating $X_i=x$ and consider
+	\begin{equation*}
+	Y_i=\sum_{x}\alpha_xd_{ix} + \sum_{x}\beta_xD_id_{ix} + \varepsilon_i
+	\end{equation*}
+	This is a \textbf{saturated} model.\\\medskip
+	
+	Note that $\delta_x=\beta_x$ (why?) and $\widehat\beta_{x}^{OLS}$ is consistent! Therefore, OLS estimates $\delta_X$.
+}
+
+
+\frame{ \frametitle{Matching and Regression}
+Now, consider this model
+\begin{equation*}
+    Y_i=\sum_{x}d_{ix}\alpha_x + \delta_R D_i + u_i
+\end{equation*}
+This is called a model \textbf{saturated-in-X}.
+
+OLS applied to this model differs from the matching estimators in the weights used to combine the $\delta_X$:
+\begin{itemize}
+  \item $\delta_{TOT}$ puts most weight on $X$-cells where it is most likely to be treated
+  \item $\delta_{R}$  puts most weight on $X$-cells where the variance of treatment is highest
+\end{itemize}
+}
+
+
+\begin{frame}{Proof}
+Recall the regression anatomy formula:
+\begin{equation*}
+	\delta_R = \frac{cov(Y_i, \tilde{D}_i)}{V[\tilde{D}]}, \text{ where $\tilde{D}_i = D_i - E[D|X=X_i]$}
+\end{equation*}
+Let's express $\delta_R$ via $\delta_X$:
+\begin{align*}
+\delta_R &= \frac{\sum_xE(Y_i\tilde{D}_i|X_i=x)P(X_i=x)}{V[\tilde{D}]}\\
+		&= \frac{\sum_xE((E[Y_i|X_i=x, D_i=0  ] + \delta_xD_i)\tilde{D}_i|X_i=x)P(X_i=x)}{V[\tilde{D}]}\\
+		&= \frac{\sum_x\delta_xE(D_i\tilde{D}_i|X_i=x)P(X_i=x)}{V[\tilde{D}]}\\
+		&= \frac{\sum_x\delta_xE(\tilde{D}_i^2|X_i=x)P(X_i=x)}{V[\tilde{D}]}\\ 
+		&= \sum_x\delta_x\frac{V(D_i|X_i=x)}{V[\tilde{D}]}P(X_i=x)
+\end{align*}
+\end{frame}
+
+
+
+\frame{ \frametitle{Propensity Score}
+The propensity score is defined as
+\begin{equation*}
+  p(X_i) := E\left[D_{i}|X_i \right]=P\left[D_{i}=1|X_i \right]
+\end{equation*}
+\begin{theorem}[Propensity Score Theorem]
+Suppose the CIA holds $\{Y_{1i},Y_{0i}\} \perp D_i|X_i$, then
+\begin{equation*}
+    \{Y_{1i},Y_{0i}\} \perp D_i|p(X_i)
+\end{equation*}
+\end{theorem}
+Proof: show that $P\left[D_{i}=1|Y_{ji},p(X_i)=p \right]$ does not depend on $Y_{ji}$ with $j=0,1$.
+
+%Note: Similarly to the OVB formula (which says that bias depends on the correlation between $D_i$ and $X$), the propensity score theorem tells
+%us that we need only control for $X$ variables that affect the probability to be treated.
+ }
+
+\frame{ \frametitle{Propensity Score Theorem - Proof}
+\begin{proof}
+\begin{eqnarray*}
+  P\left[D_{i}=1|Y_{ji},p(X_i)=p \right] &=& E\left[D_{i}|Y_{ji},p(X_i)=p \right] \\
+   &=& E\{E\left[D_{i}|Y_{ji},p(X_i),X_i \right]| Y_{ji},p(X_i)=p \}\\
+   &=& E\{E\left[D_{i}|Y_{ji},X_i \right]| Y_{ji},p(X_i)=p \} \\
+   &=&  E\{E\left[D_{i}|X_i \right]| Y_{ji},p(X_i)=p \} \\
+   &=& E\{p(X_i)| Y_{ji},p(X_i)=p \}=p
+\end{eqnarray*}
+\end{proof}
+ }
+
+\frame{ \frametitle{Propensity Score Theorem - Practical Implications}
+The propensity score theorem reduces the dimension of the matching problem to a single variable $p(X_i)$.
+This motivates a 2-step estimation procedure
+\begin{enumerate}
+  \item Estimate the propensity score
+  \item Generate a matching estimator based on the propensity score
+\end{enumerate}
+ }
+
+\frame{ \frametitle{Application}
+Rosenbaum + Rubin JASA (1984) "Reducing Bias in Observational Studies Using Sub-classification on the Propensity Score"
+\bigskip
+
+Medical vs. surgical treatment of coronary artery disease
+\begin{itemize}
+  \item $D_i=1$ patient receives bypass surgery $N_T=590$
+  \item $D_i=0$ patient receives medical therapy $N_C=925$
+\end{itemize}
+Outcome variables: survival rates, health improvements
+
+Selection: patients with worse health are more likely treated with surgery
+}
+
+\frame{ \frametitle{Estimating the Propensity Score}
+
+In total 74 covariates available, this means many options to specify a propensity score estimator!
+
+What is a good estimator for the propensity score?
+
+The propensity score theorem
+\begin{equation*}
+    \{Y_{1i},Y_{0i}\} \perp D_i|X_i \Rightarrow \{Y_{1i},Y_{0i}\} \perp D_i|p(X_i)
+\end{equation*}
+implies that observations with "similar" values of the propensity score should also have "similar" $X$-characteristics.
+}
+
+\frame{ \frametitle{Estimating the Propensity Score}
+Subclassification Algorithm
+\begin{itemize}
+  \item Estimate a parsimonious logit for $P(D_i=1|X_i)$
+  \item Stratify the data by quintile blocks of $\hat{p}(X_i)$
+  \item Compare $\bar{X}_T-\bar{X}_C$ in each block. Use a t-test or F-test of significant differences in means
+\begin{enumerate}
+  \item if $X_i$ are balanced in each block STOP
+  \item if not balanced, divide block in 2 parts and re-evaluate
+  \item if $X_i$ not balanced in all blocks re-specify the logit: add interaction terms and polynomials of variables with high F-/t-stats.
+\end{enumerate}
+\item Rosenbaum + Rubin "5 subclasses constructed from the propensity score are sufficient to remove 90\% of the bias"
+\end{itemize}
+ }
+
+ \frame{ \frametitle{Tests of Balance}
+\begin{center}
+\begin{figure}[t]
+\includegraphics[angle=-90,scale=.35]{"graphs/rosenbaumrubin_f1"}
+\end{figure}
+\end{center}
+ }
+
+ \frame{ \frametitle{Balance for single variables}
+ Good:
+\begin{center}
+\begin{figure}[t]
+\includegraphics[angle=-90,scale=.35]{"graphs/rosenbaumrubin_f3"}
+\end{figure}
+\end{center}
+ }
+
+ \frame{ \frametitle{Balance for single variables}
+ Not so good:
+\begin{center}
+\begin{figure}[t]
+\includegraphics[angle=-90,scale=.35]{"graphs/rosenbaumrubin_f5"}
+\end{figure}
+\end{center}
+ }
+
+\frame{ \frametitle{Propensity Score as diagnostic tool}
+
+Compare box-plots or histograms of the distribution of $\hat{p}(X_i)$ for observations with $D_i=0$ and  $D_i=1$.
+
+Is there sufficient overlap in the distributions?
+
+If observable variables $X_i$ are very different among treated and controls, it is also more likely that unobservables differ a lot.\\\bigskip
+Perfect prediction of $D_i$ is a \textbf{bad sign}! E.g., imagine $D_i=\text{surgery}$ for all patients in subclass 1. Cannot compare their outcomes to similar patients undergoing therapy.
+
+}
+
+ \frame{ \frametitle{Box Plots}
+\begin{center}
+\begin{figure}[t]
+\includegraphics[angle=-90,scale=.35]{"graphs/rosenbaumrubin_f6"}
+\end{figure}
+\end{center}
+ }
+
+\frame{ \frametitle{Matching Estimates for ATE}
+	Many ways to implement the matching . The easiest --- follow the age-smoking example:
+	\begin{itemize}
+		\item{Find treatment effect $\delta_c$ for each subclass $c$.}
+		\item{Combine $\delta_c$ to form $\delta_{ATE}$ (or $\delta_{TOT}$, $\delta_{TOU}$, etc).}
+	\end{itemize}
+
+}
+
+ \frame{ \frametitle{Matching Estimates for ATE}
+\begin{center}
+\begin{figure}[t]
+\includegraphics[angle=-90,scale=.35]{"graphs/rosenbaumrubin_t1"}
+\end{figure}
+\end{center}
+ }
+
+ \frame{ \frametitle{Matching Estimates}
+\begin{center}
+\begin{figure}[t]
+\includegraphics[angle=-90,scale=.35]{"graphs/rosenbaumrubin_t2"}
+\end{figure}
+\end{center}
+ }
+
+ \frame{ \frametitle{Matching Estimates}
+\begin{center}
+\begin{figure}[t]
+\includegraphics[angle=-90,scale=.35]{"graphs/rosenbaumrubin_t3"}
+\end{figure}
+\end{center}
+ }
+
+\begin{frame}{Another way to implement matching: K-nearest neighbors}
+	The above example used \textbf{stratification} matching (by subclass).\\\bigskip
+	
+	Popular alternative --- \textbf{k nearest neighbors}. Suppose we somehow estimated the propensity score $\widehat{p}(X_i)$. Let's find $\delta_{TOT}$:	
+	\begin{enumerate}
+		\item{For every treated $i$, find $K$ untreated observations closest to $i$ in terms of $\widehat{p}$; call them $C_i$.}
+		\item{Construct a counterfactual for $i$: $\widehat{Y}_{0i} = \frac{1}{K}\sum\limits_{j\in{}C_i}Y_j$}
+		\item{Estimated treatment effect for $i$: $Y_i - \widehat{Y}_{0i}$. Treatment effect on the treated:
+		\begin{equation*}
+			\widehat{\delta}_{TOT} = \frac{1}{N_{treated}}\sum\limits_{i:D_i=1}\left(Y_i - \widehat{Y}_{0i}\right)
+		\end{equation*}}
+	\end{enumerate}
+		
+\end{frame}
+
+\begin{frame}{K nearest neighbors, k=2}
+	\begin{tabular}{|r|llr|}
+	\hline
+	$i$ & $D_i$ & $\widehat{p}_i(X_i)$ & $Y_i$ \\ \hline
+	$1$ & $0$   & $0.01$               & $0.4$\\
+	$2$ & $1$   & $0.05$               & \tikz[baseline,remember picture]{\node[shape=rectangle, draw=red,thick,anchor=base] (t1){$2.1$}} \\
+	$3$ & $1$   & $0.12$               & \tikz[baseline,remember picture]{\node[shape=rectangle, draw=blue,thick,anchor=base] (t2){$1.8$}} \\
+	$4$ & $0$   & $0.12$               & $-0.1$\\
+	$5$ & $1$   & $0.23$               & \tikz[baseline,remember picture]{\node[shape=rectangle, draw=green,thick,anchor=base] (t3){$0.9$}}\\
+	$6$ & $0$   & $0.31$               & $1.3$\\
+	$7$ & $0$   & $0.33$               & $0.2$\\
+	$8$ & $1$   & $0.52$               & $-0.2$\\
+	$9$ & $0$   & $0.61$               & $1.7$\\
+	$10$ & $1$   & $0.83$               & $1.1$\\ \hline
+\end{tabular}\hfill\begin{tabular}{|r|llr|}
+	\hline
+	$i$ & $D_i$ & $\widehat{p}_i(X_i)$ & $Y_i$ \\ \hline
+	$1$ & $0$   & $0.01$               & \tikz[baseline,remember picture]{\node[anchor=base] (c1){$0.4$}}\\
+	$2$ & $1$   & $0.05$               & $2.1$ \\
+	$3$ & $1$   & $0.12$               & $1.8$ \\
+	$4$ & $0$   & $0.12$               & \tikz[baseline,remember picture]{\node[anchor=base] (c2){$-0.1$}}\\
+	$5$ & $1$   & $0.23$               & $0.9$\\
+	$6$ & $0$   & $0.31$               & \tikz[baseline,remember picture]{\node[anchor=base] (c3){$1.3$}}\\
+	$7$ & $0$   & $0.33$               & \tikz[baseline,remember picture]{\node[anchor=base] (c4){$0.2$}}\\
+	$8$ & $1$   & $0.52$               & $-0.2$\\
+	$9$ & $0$   & $0.61$               & $1.7$\\
+	$10$ & $1$   & $0.83$               & $1.1$\\ \hline
+\end{tabular}\\
+
+\begin{tikzpicture}[remember picture,overlay]
+	\path[draw=red,thick,->](t1.east) to (c1.west);
+	\path[draw=red,thick,->](t1.east) to (c2.west);
+	\path[draw=blue,thick,->](t2.east) to (c1.west);
+	\path[draw=blue,thick,->](t2.east) to (c2.west);
+	\path[draw=green,thick,->](t3.east) to (c3.west);
+	\path[draw=green,thick,->](t3.east) to (c4.west);
+\end{tikzpicture}
+
+\begin{equation*}
+	\widehat{Y}_{02} = \widehat{Y}_{03} = \frac{0.4 - 0.1}{2}, \quad \widehat{Y}_{05} = \frac{1.3 + 0.2}{2}, \quad \text{etc..}
+\end{equation*}
+Warning: the gap between $\widehat{p}_{10}$ and $\widehat{p}_{7}$ is huge. It's safer to estimate ATE only for the subpopulation with $p>=0.61$.
+\end{frame}
+
+\begin{frame}{Yet another way: linear regression}
+	Use OLS to estimate
+	\begin{equation*}
+		Y_i = \alpha_0 + \alpha_1\widehat{p}_i + (\beta_0 + \beta_1\widehat{p}_i)D_i + \varepsilon_i
+	\end{equation*}
+	treatment effect: $\widehat{\delta}_p = \widehat{\beta}_0 + \widehat{\beta}_1p$.\\
+	
+	Or, use a more flexible approximation:
+	\begin{equation*}
+		Y_i = \alpha_0 + \alpha_1\widehat{p}_i + \alpha_2\widehat{p}_i^2 + (\beta_0 + \beta_1\widehat{p}_i + \beta_2\widehat{p}^2_i)D_i + \varepsilon_i
+	\end{equation*}
+	Recall the saturated regression in the ``effect of smoking by age'' example --- same logic here.
+\end{frame}
+
+\begin{frame}{..And my personal favorite}
+	Let's say we are looking for ATE:
+	\begin{equation*}
+		\delta_{ATE} = E[Y_{1i} - Y_{0i}]
+	\end{equation*}
+	Note that
+	\begin{align*}
+		E\left[\frac{Y_iD_i}{p(X_i)}\right] &=  E\left[E\left[\left.\frac{Y_iD_i}{p(X_i)}\right|X_i\right]\right]\\
+		&=E\left[p(X_i)E\left[\left.\frac{Y_iD_i}{p(X_i)}\right|X_i, D_i=1\right] + (1-p(X_i))\cdot{}0\right]\\
+		&=E\left[E\left[\left.Y_{1i}\right|X_i, D_i=1\right]\right] = E\left[E\left[\left.Y_{1i}\right|X_i\right]\right] = E\left[Y_{1i}\right]
+	\end{align*}
+	Similarly, $E[Y_{0i}] = E\left[\frac{Y_i(1-D_i)}{1-p(X_i)}\right]$. Thus, $\delta_{ATE} = E\left[\frac{(D_i-p(X_i))Y_i}{p(X_i)(1-p(X_i))}\right]$
+	In finite samples,
+	\begin{equation*}
+		\widehat{\delta}_{ATE} = \frac{1}{N}\sum\limits_{i=1}^N\frac{(D_i-\widehat{p}(X_i))Y_i}{\widehat{p}(X_i)(1-\widehat{p}(X_i))}
+	\end{equation*}
+\end{frame}
+
+\begin{frame}{Concluding remarks}
+	\begin{itemize}
+		\item{There is a myriad of ways to implement matching. Some of them come with fancy names, lofty promises.}
+		\item{But remember, there is no magic here. Matching is based on same exogeneity assumptions as OLS.}
+		\item{Most importantly: \textbf{matching won't help if treatment depends on unobservables}.}
+	\end{itemize}
+\end{frame}
+
+\end{document}
+%
+%
+%
+%\frame{ \frametitle{Literature}
+%\begin{itemize}
+%  \item Rosenbaum, Paul R. and Donald B. Rubin (1984) "Reducing Bias in Observational Studies Using Subclassification on the Propensity Score" Journal of the American Statistical Association, 79, 516-524.
+%  \item LaLonde, Robert J. (1986), "Evaluating the Econometric Evaluations of Training Programs with Experimental Data", American Economic Review 76, 604-620.
+%  \item Dehejia, Rajeev H. and Sadek Wahba (1999) "Causal Effects in Nonexperimental Studies: Reevaluating the Evaluation of Training Programs" Journal of the American Statistical Association, 94, 1053-1062.
+%  \item Imbens, Guido W. (2004) "Nonparametric Estimation of Average Treatment Effects Under Exogeneity: A Review" Review of Economics and Statistics, 86, 4-29.
+%  \item Caliendo, Marco and Sabine Kopeinig (2008), "Some Practical Guidance for the Implementation of Propensity Score Matching" Journal of Economic Surveys, 22(1), 31-72.
+%\end{itemize}
+%}
+%
+%
+%\begin{frame}
+%\frametitle{Discussion}
+%OVB formula describes the relationship between regression models with different sets of control variables
+%\begin{eqnarray*}
+%    y_i&=&\tilde{\alpha}+\tilde{\rho} S_i + \eta_i \;\;\mbox{short regression} \\
+%    y_i &=& \alpha+\rho S_i + A_i\beta+ u_i \;\;\mbox{long regression}
+%\end{eqnarray*}
+%if the CIA applies given $A_i$ then $\rho$ is the coefficient of the linear causal model.
+%\begin{eqnarray*}
+%   &&\mbox{OVB FORMULA} \\
+%    \tilde{\rho} &=& \frac{Cov(y_i, S_i)}{Var(S_i)}=\rho+\beta'\delta_{As}
+%\end{eqnarray*}
+%
+%\end{frame}
+
+
