@@ -247,7 +247,7 @@ E[Y_{ist}| s=NJ, t=Nov] &-&E[Y_{ist}| s=NJ, t=Feb] \nonumber\\
 \end{eqnarray}
 Differences in Differences:
 \[ (2) - (1) = \rho  \]
- Assumption:
+\textbf{Parallel trends assumption:}
 \begin {itemize}
 \item In absence of minimum wage change employment in NJ would have developed the same way as in PA
 \item No other factors only affect NJ and not PA
@@ -318,7 +318,7 @@ Saturated Model
 \frametitle{Remarks}
 
  \begin{eqnarray*}
-Y_{ist}&=& \alpha + \gamma NJ_{s}+ \lambda d_{t}+ \rho ( NJ_{s}\times d_{t})+ \epsilon_{ist}
+Y_{ist}&=& \alpha + \gamma NJ_{s}+ \lambda d_{t}+ \rho NJ_{s}\times d_{t}+ \epsilon_{ist}
  \end{eqnarray*}
 
 \begin {itemize}
@@ -335,9 +335,9 @@ Y_{ist}&=& \alpha + \gamma NJ_{s}+ \lambda d_{t}+ \rho ( NJ_{s}\times d_{t})+ \e
 
 Time $t=-\underline{T},\dots,0,1$. Treatment: between $t=0$ and $t=1$. Check if the trends are indeed parallel:
 \begin{align*}
-Y_{ist} = \sum_{\tau=-\underline{T}}^1\lambda_\tau{}d_{\tau t} + \sum_{\tau=-\underline{T}}^0\gamma_\tau(d_{\tau t}\times{}NJ_s) + \rho (d_{1 t}\times{}NJ_s) + \varepsilon_{ist}
+Y_{ist} = \gamma_0NJ_s + \sum_{\tau=-\underline{T}}^1\lambda_\tau{}d_{\tau t} + \sum_{\tau=-\underline{T}}^{-1}\beta_\tau d_{\tau t}\times{}NJ_s + \rho  d_{1 t}\times{}NJ_s + \varepsilon_{ist}
 \end{align*}
-Test $H_0: \gamma_0 = \gamma_{-1} = \dots = \gamma_{-\underline{T}}$.
+Test $H_0: \beta_{-1} = \ldots = \beta_{-\underline{T}} = 0$.
 \end{frame}
 
 \begin{frame}{No visible co-movement -- bad sign}
@@ -356,13 +356,15 @@ Selection based on outcome prior to treatment. Example: effect of a training pro
 	\item{Control: workers who did not.}
 	\item{But how do workers self-select into enrollment? Temporary wage decline $\to$ more likely to enroll? Then we have a problem.}
 \end{itemize}
-Test if $\gamma_0=\gamma_{-1}$.
+Test if $\beta_{-1} = 0$.\bigskip
+
+Alternative test: try predicting treatment using past outcomes and \textbf{same set of controls} as in the main regression. Are past outcomes significant?
 \end{frame}
 
 \begin{frame}{More data from the post-treatment period?}
 Time $t=-\underline{T},\dots, \overline{T}$. Consider delayed effects, set up a fully saturated model. In Card \& Krueger's case, we would estimate
 \begin{align*}
-Y_{ist} &= \sum_{\tau=-\underline{T}}^{\overline{T}}\lambda_\tau{}d_{\tau t} + \gamma_0NJ_s +  \sum_{\tau=-\underline{T}}^{-1}\gamma_\tau d_{\tau t}\times{}NJ_s\\
+Y_{ist} &= \gamma_0NJ_s + \sum_{\tau=-\underline{T}}^{\overline{T}}\lambda_\tau{}d_{\tau t} +  \sum_{\tau=-\underline{T}}^{-1}\beta_\tau d_{\tau t}\times{}NJ_s\\
 &+ \sum_{\tau=1}^{\overline{T}}\rho_\tau d_{\tau t}\times{}NJ_s + \varepsilon_{ist}
 \end{align*}
 Labor market frictions $\to$ effect of treatment is gradual, $|\rho_2|>|\rho_1|$.
