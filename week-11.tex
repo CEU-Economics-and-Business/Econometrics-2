@@ -103,7 +103,7 @@ symbols}{} \setbeamertemplate{headline}[default]
 \newcounter{endbs}
 
 
-\title[Fuzzy Regression Discontinuity]{Econometrics 2 (Part 1)}
+\title[Fuzzy Regression Discontinuity]{Econometrics 2}
 
 \author[Lychagin  \& Mu\c co]{Arieda Mu\c co}
 \institute[CEU]{Central European University}
@@ -137,7 +137,7 @@ symbols}{} \setbeamertemplate{headline}[default]
 
 \frame{ \frametitle{Fuzzy Regression Discontinuity}
 
-Probability of receiving treatment does not change from 0 to one at the cutoff, but
+Probability of receiving treatment does not change from zero to one at the cutoff, but
 
 \begin{equation*}
 \underset{z\uparrow z_0}{lim} P(D_i=1|z_i=z) \neq \underset{z \downarrow z_0}{lim} P(D_i=1|z_i=z)
@@ -260,7 +260,7 @@ D_i=\gamma_{00} +\gamma_{01} \tilde{z_i} +\gamma_2 \tilde{z_i}^2  +\gamma_3 \til
  }
 %---------------------------------------------------------------------------------%
 
- \frame{ \frametitle{What does Fuzzy RDD Estimate?}
+ \frame{ \frametitle{What does Fuzzy RD Estimate?}
 \begin{itemize}
 
 \item As Hahn, Todd and van der Klaauw (2001) point out, one
@@ -292,8 +292,7 @@ when:
 
 
 \item Some other unobservable characteristic changes at the threshold, and this has a
-direct effect on the outcome.
-\item In other words, the cutoff is endogenous
+direct effect on the outcome
 \item \textbf{Example:} Age thresholds used for policy (i.e., person turns 18, and faces more
 severe penalties for crime) is correlated with other variables that affect the outcome (i.e., graduation, voting rights, etc.)
 \end{itemize}
@@ -458,10 +457,13 @@ discontinuity
  }
  %---------------------------------------------------------------------------------%
 
-  \frame{\frametitle{Examples Fuzzy RD}
+  \frame{\frametitle{Democracy, Redistribution, and Political Participation: Evidence From Sweden 1919 --1938 (Econometrica, 2014)}
 \begin{itemize}
-\item  Tyrefors Hinnerich and Pettersson-Lidbom, Econometrica(2014)
 \item Does the form of Democracy matter?
+\begin{itemize}
+\item Test direct vs representative democracy
+\end{itemize}
+
 \item The elite can capture democratic political process by
 exercising their de facto political power
 \begin{itemize}
@@ -574,6 +576,13 @@ treatment status
  }
  
  
+ \frame{ \frametitle{Book References}
+\begin{itemize}
+\item Angrist, Joshua D., and J\"{o}rn-Steffen Pischke. Mostly harmless econometrics: An empiricist's companion. Princeton university press, 2008.
+\item Angrist, Joshua D., and J\"{o}rn-Steffen Pischke. Mastering' metrics: The path from cause to effect. Princeton University Press, 2014.
+\item Cunningham, Scott. "Causal Inference: The Mixtape." 
+\end{itemize}
+}
  \end{document}
 
 
