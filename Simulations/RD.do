@@ -8,6 +8,7 @@ gen z = rnormal(50, 25)
 
 histogram z
 
+
 replace z=0 if z < 0
 drop if z > 100
 summarize z, detail

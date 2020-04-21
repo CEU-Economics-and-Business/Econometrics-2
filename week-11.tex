@@ -137,17 +137,17 @@ symbols}{} \setbeamertemplate{headline}[default]
 
 \frame{ \frametitle{Fuzzy Regression Discontinuity}
 
-Probability of receiving treatment does not change from zero to one at the cutoff, but
+Probability of receiving treatment does not change from zero to one at the cutoff but changes discontinuously
+
 
 \begin{equation*}
 \underset{z\uparrow z_0}{lim} P(D_i=1|z_i=z) \neq \underset{z \downarrow z_0}{lim} P(D_i=1|z_i=z)
 \end{equation*}
-other variables also determine treatment assignment, but incentives to participate change discontinuously at the threshold.
 \begin{itemize}
 
-\item Examples: Incentives to participate in some program may change discontinuously at
+\item Incentives to participate in some program may change discontinuously at
 the cutoff but are not powerful enough to move everyone from non participation to
-participation.
+participation
 \end{itemize}
 
 }
@@ -227,7 +227,7 @@ Y_i= \mu+\kappa_1 z_i +\kappa_2 z_i^2  +\kappa_3 z_i^3+... +\kappa_p z_i^p+ \rho
  \frame{ \frametitle{Fuzzy RD with varying Treatment Effects - Second Stage}
 \begin{itemize}
 
-\item As in the sharp RD case one can allow the smooth function
+\item As in the sharp RD case, one can allow the smooth function
 to be different on both sides of the discontinuity
 \item The second stage model with interaction terms would be the
 similar to before:
