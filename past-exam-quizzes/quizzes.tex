@@ -1,0 +1,197 @@
+\documentclass[12pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+\usepackage{comment}
+\usepackage{array}% http://ctan.org/pkg/array
+\usepackage{caption}						% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{amsmath}
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Std}{\mathrm{Std}}
+\newcommand{\med}{\mathrm{med}}
+\newcommand{\Skewness}{\mathrm{Skewness}}
+\newcommand{\Corr}{\mathrm{Corr}}
+\renewcommand{\contentsname}{Table of Contents}
+\setlength\parindent{0pt}
+\usepackage{xcolor}
+\usepackage{float}	%To improve floating environments
+
+\usepackage[bottom]{footmisc}
+\usepackage[etex=true,export]{adjustbox}
+
+\usepackage{lscape}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\setcounter{MaxMatrixCols}{10}
+\setlength\leftmarginii{3.1em}
+%\usepackage{dsfont}
+
+ \usepackage{url}
+\usepackage{comment}
+\usepackage{graphicx}%Permite mucho mas que el graphics package.
+\usepackage{graphics, subfigure}
+\usepackage[colorlinks = true,
+ 	linkcolor = black,
+ 	urlcolor = black,
+ 	citecolor = black,
+ 	anchorcolor = black]{hyperref}
+\usepackage{natbib}
+\usepackage{multirow,booktabs}
+\usepackage{longtable} %To introduce tables spanning more than 1 page
+\usepackage[toc,page]{appendix}
+\usepackage{setspace}
+
+\usepackage{caption} %allows customization of appearance and placement of captions for figures, tables, etc
+%\usepackage{date}
+\usepackage{float}	%To improve floating environments
+\usepackage{lscape}
+\DeclareCaptionFormat{mytable}{#1#2\vspace{2pt}#3\par}
+%\captionsetup[table]{format=mytable,labelsep=newline,justification=centering,font={sc},labelfont={large},aboveskip=2pt}
+%\renewcommand*\thetable{\Roman{table}} %To number Tables in Roman letters
+\newcommand{\T}{\rule{0pt}{12pt}} %To separate rows from hlines in tables (Top)
+\newcommand{\B}{\rule[-1.2ex]{0pt}{0pt}} %To separate rows from hlines in tables (Bottom)
+
+%\captionsetup[figure]{format=mytable,labelsep=newline,justification=centering,font={sc},labelfont={large},aboveskip=2pt}
+%\renewcommand*\thefigure{\Roman{figure}} %To number Figures in Roman letters
+
+%\let\estinput=\input% define a new input command so that I can still flatten the document
+
+
+\thispagestyle{empty}
+\begin{document}
+
+\indent \textbf{Question 1 } Assume there is a new anti-flu pill on the market and you are interested in understanding if it improves upon flu cases. Suppose that you observe that families of nurses and doctors take the pill. Can you compare health outcomes of family member of nurses and doctors who take the pill with family members of nurses and doctors who don't take the pill? Do you expect this comparison to be a valid one?\\
+
+Assume now that the pill is given to 500 patients and a placebo pill is given to other 500 patients, using random assignment of patients to treatment. How would you estimate the treatment effect of the pill? Suppose that you have data on weight, gender of each patient, could you use these data to improve your estimate? Suppose you also measured the cholesterol level of each patient before assigning them to treatment. Could you say whether these data improve your estimate? Explain.\\
+
+
+ \textbf{Answer}  Comparing families of nurses and doctors who take the pill  (treatment group) with family member of nurses and doctors who do not take the pill (control group) is not a valid comparison as individuals who take the pill might be different from those who do not. For example, it might be that families of doctors who take the anti-flu pill are more likely to get frequent flu cases hence, on average, less healthy than the comparison group.\\
+ 
+Random assignment of patient to treatment solves the selection problem. Making the control group take a placebo ensures that treatment and control groups are as similar as possible. In this way we avoid that patients in the treatment group realize that they are part of an experiment and start to behave differently, i.e start to eat more healthy, exercise etc. (This is problematic because if patients start to behave differently then we do not know whether this is the effect of the pill or healthier lifestyle.) In case of random assignment we just need to compare means (which would be the equivalent of the regression of health outcomes on a dummy taking value one if the patient is in the treatment group).  \\
+
+Data on weight, gender of each patient should not affect the sign of the coefficient estimate, however, they can help us to estimate the causal effect of the pill on health outcomes with more precision, lower standard errors on the coefficient estimate. Same reasoning applies to the cholesterol level. In case of random assignment we expect mean differences on these covariates to be balanced among treatment and control group, no systematic differences between treatment and control.
+
+For deeper understanding about this question look at AP Chapter 2 and lecture notes. \\
+
+\indent \textbf{Question 2 } Consider the following hypothetical example: some schools in California are forced to close for repairs due to a summer earthquake. District closer to the epicenter are most severely affected. A district with some closed schools need to ``double up" their students temporarily increasing class size. This is an example of a quasi-experiment. How would you use this quasi-experiment to estimate the effect of class size on test scores?\\
+
+\textbf{Answer}  In this case we could use distance from the  epicenter as an instrument for class size. Distance from the epicenter satisfies the condition for instrument relevance as it is correlated with class size. The idea is that the instrument affect test scores only through class size and should be unrelated to any other factors that might affect student performance. If this is the case, then the instrument is exogenous as it is uncorrelated with the error term. Thus the instrument could use to estimate the effect of class size on test scores. 
+\\See below for a more detailed answer on the conditions for instrument validity  AP Chapter 4, Wooldridge Chapter 15 and Lecture Notes. \\
+ 
+ 
+\indent  \textbf{Question 3 } 
+\indent In an article, Evans and Schwab (1995) studied the effects of attending a
+Catholic high school on the probability of attending college.\\
+
+\textbf{Answer} For concreteness, let college
+be a binary variable equal to unity if a student attends college, and zero otherwise.
+Let $CathHS_i$ be a binary variable equal to one if the student attends a Catholic high
+school. The model to estimate is:\\
+ 
+$College_i=\alpha+\beta CathHS_i+X_i+u_i$ \\
+ 
+where $X_i$  includes gender, race, family income, and parental education.\\
+
+(i) Why might $CathHS_i$ be correlated with $u_i$?\\
+
+\textbf{Answer} Individuals who attend catholic high school may have different set of values, motivation and attitude towards studying (maybe intrinsic motivation or family expectations) which can affect both high school choice -- i.e choosing catholic high school -- and applying to college. \\   
+
+ 
+(ii) Evans and Schwab have data on a standardized test score taken when
+each student entered high school. What can be done with these variables
+to improve the ceteris paribus estimate of attending a Catholic high
+school?\\
+
+\textbf{Answer} It may be used as a proxy for latent skills (ability), which may also be a cause of endogeneity, if the process of getting into Catholic high schools is more demanding. Correlation between the test score and ability is probably positive. \\ 
+ 
+(iii) Let $CathRel_i$ be a binary variable equal to one if the student is Catholic.
+Discuss the two requirements needed for this to be a valid IV for
+$CathHS_i$ in the preceding equation. Which of these can be tested?\\
+ 
+ \textbf{Answer} The two conditions to meet are the relevance and exclusion restrictions. Relevance means a non zero correlation between religion and Catholic high school attendance. This condition can be tested.  \\ 
+
+The exclusion restriction is satisfied if being a Catholic would only affect college attendance only through attending a catholic high school. It could not have a direct effect on admission rates - e.g. due to college principals admitting more Catholic students independent of their performance. Nor could be there confounders related to both being a Catholic and getting admitted to college.\\
+ 
+(iv) Not surprisingly, being Catholic has a significant effect on attending a
+Catholic high school. Do you think $CathRel_i$ is a convincing instrument
+for $CathHS_i$?\\
+
+\textbf{Answer} When thinking of whether the instrument is a convincing one we should think of how the instrument might affect the outcome variable, $College_i$, directly or how it might be potentially correlated with the error term.  (see in (iii) to see how exclusion restriction might be violated). If the exclusion restriction is violated, we say that the instrument is not valid. \\
+
+Note that this is not the same as the case of weak instruments. We talk about weak instrument in cases when the correlation between the instrument and the endogenous variable is low. As a rule of thumb for the instrument to be considered relevant, the F-statistics of the first stage of the excluded instruments should be less than 10.\\
+
+See Chapter 4 of AP, Wooldridge Chapter 15 and lecture notes. \\
+
+
+\indent  \textbf{Question 4 } Consider the problem of estimating the effect of family income on college grade point
+average. It could be that, though family income is important for performance before
+college, it has no direct effect on college performance. To test this, we might postulate
+the model:\\
+
+\[
+colGPA_i =\beta_0 +\beta_1 faminc^{*}_i+\varepsilon_i
+\]
+
+where $faminc^{*}$ is actual annual family income.  Family income is self reported by students, hence
+could be easily measured with error.  
+%Precise data on $colGPA$, $hsGPA$, and SAT are relatively easy to obtain. \\
+
+Assume that we are in the case of classical measurement error. What are the consequences of the measurement error when estimating $\beta_1$?\\
+
+\textbf{Answer} 
+The consequences of the classical measurement error is attenuation bias in the parameter of interest.
+If we would observe the real family income,  $faminc^{*}$, then we would just estimate $\beta$ with OLS. However this is not the case as family income is self reported hence likely to be measured with error.
+
+\[
+faminc= faminc^{*}_i+ u_i
+\]
+
+
+ we observe $faminc$ which is a function of the real family $faminc^{*}$ and some measurement error.
+Given that we are in the classical measurement error case, then we know that:
+\[
+ u_{i} \sim iid (0, \sigma^{2}_u)
+  \] 
+ \[
+  Cov (faminc^{*}, u_i)=0
+ \] 
+ \begin{eqnarray*}
+	colGPA_i &=&  \beta_1 faminc^{*}_{i}+ \varepsilon_{i} \\
+	          &=&      \beta_1 (faminc_{i} - u_{i} ) + \varepsilon_{i} = \beta_1 faminc_{i} \underbrace{- \beta_1 u_{i} + \varepsilon_{i}}_{\tilde{ \varepsilon}_{i}} \\
+	 colGPA_i       &=&     \beta_1 faminc_{i} + \tilde{ \varepsilon}_{i} \;\;\;\;\;\;\text{estimated model}
+ \end{eqnarray*}
+
+
+Estimating the model with OLS gives using the observed family income gives an underestimate of the true parameter  $\beta_1$. To see this note that:
+
+\begin{eqnarray*}
+     \tilde{\beta_1} &=&  \frac{Cov \left(colGPA_i, faminc_{i}\right)}{Var\left(faminc_{i}\right)}  \\
+      &=&  \frac{Cov \left( \beta_1 faminc_{i} +\tilde{ \varepsilon}_{i} , faminc_{i} \right)}{Var\left(faminc_{i}\right)} \\
+             &=& \frac{\beta_1 Cov \left(  faminc_{i} , faminc_{i} \right)}{Var\left(faminc_{i}\right)}+\frac{Cov \left(   \tilde{ \varepsilon}_{i}, faminc_{i} \right)}{Var\left(faminc_{i}\right)} \\
+      &=&  \underbrace{ \beta_1}_{A} +   \underbrace{\frac{Cov \left( \tilde{ \varepsilon}_{i} ,faminc_{i} \right)}{Var\left(faminc_{i}\right)} }_{B} \\
+\end{eqnarray*}
+
+
+The numerator in B can be written as:
+  \begin{eqnarray*}
+	Cov \left(faminc_{i},\tilde{ \varepsilon}_{i} \right) &=& Cov\left(faminc_{i},  - \beta_1 u_{i} + \varepsilon_{i}\right)=Cov\left(faminc_{i}, -\beta_1 u_{i}\right)+ Cov\left(faminc_{i},  \varepsilon_{i} \right) \\
+	                                    &=& -\beta_1 Cov\left(faminc_{i},u_{i}\right) = -\beta_1 Cov\left(faminc^{*}_{i}+u_{i}, u_{i}\right)\\
+	                                    &=&  -\beta_1 \sigma^{2}_{u}
+ \end{eqnarray*}
+Hence, substituting we get that:
+
+\begin{eqnarray*}
+    &=&  \beta_1 - \beta_1 \frac{\sigma^{2}_{u}}{Var\left(faminc_{i}\right)}\\
+        &=&  \beta_1 \left[1 -  \frac{\sigma^{2}_{u}}{\sigma^{2}_{u}+Var\left(faminc^{*}_{i}\right)}\right]
+\end{eqnarray*}
+
+The solutions to this example follows exactly as in the lecture notes and Wooldrigde Chapter 9.
+
+
+\end{document}  

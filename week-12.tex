@@ -298,14 +298,14 @@ Where  $\tilde{ s_{i} }$ is the error from a regression of $s_{i}$  on $X_{i} $.
 
 \begin{frame}
 \frametitle{Note that}
-Under CME, $ \epsilon_{i}$, is uncorrelated with the covariate, $X_{i} $. Then the coefficient from a regression of mismeasured  $s_{i}$ on $X_{i} $ is the same as the coefficient from a regression of  $s^{*}_{i}$  on $X_{i} $.\\
-Hence,
+Under CME $ \epsilon_{i}$ is uncorrelated with the covariate, $X_{i} $. Then the coefficient from a regression of mismeasured  $s_{i}$ on $X_{i} $ is the same as the coefficient from a regression of  $s^{*}_{i}$  on $X_{i} $.\\
+Hence
 \begin{eqnarray*}
  \tilde{s_{i}} &=&\tilde{s^{*}_{i}}+\epsilon\\
  s_{i} -\beta  X_{i} &=& s^{*}_{i}-\beta  X_{i}+\epsilon \\
  Var(\tilde{{s_{i}}} )&=&Var(\tilde{{s^{*}_{i}}})+Var(\epsilon)
 \end{eqnarray*}
-Therefore, attenuation bias in the multivariate case exacerbates the measurement error problem
+Attenuation bias in the multivariate case exacerbates the measurement error problem
 \begin{eqnarray*}
   \rho_b &=&\frac{Cov(Y_{i}, \tilde{ s_{i} })}{Var( \tilde{ s_{i} })} = \rho \frac{Var(\tilde{s^{*}_{i}})}{Var( \tilde{ s_{i} })} \\
   &=&\rho \frac{Var(\tilde{s^{*}_{i}})}{Var(\tilde{s^{*}_{i}})+Var(\epsilon)}=  \rho \frac{\sigma^2_{ \tilde{ s^{*} }}}{\sigma^2_{ \tilde{ s^{*} }}+\sigma^2_ \epsilon} 
@@ -333,7 +333,7 @@ Since $Var(\tilde{s^{*}_{i}})  < Var({s^{*}_{i}})$ implies that $ \frac{\sigma^2
 	\item identical genes
 	\item can assume identical  $A_{i}$
 	\end{itemize}
-\item What happens if we can control for ability bias, but there is measurement error in $s_i$?
+\item What happens if we can control for ability bias but there is measurement error in $s_i$?
 \item Survey data collected at twins' festival in Ohio
 \end{itemize}
 \end{frame}

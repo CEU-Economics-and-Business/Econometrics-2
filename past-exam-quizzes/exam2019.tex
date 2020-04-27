@@ -1,0 +1,108 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{paralist}
+\usepackage[onehalfspacing]{setspace}
+
+
+
+\title{Econometrics 2, Winter 2019\\
+Final Exam}
+\date{}
+\author{}
+\begin{document}
+\maketitle
+\reversemarginpar
+
+The exam is closed book. You have 90 minutes to answer all the questions. There are a total of 100 points. Since partial credit will be given, please be sure to answer as many parts of the questions as you can. Try to keep verbal answers short. \textbf{Single yes/no answers will not count; every answer should be accompanied with a short explanation.}
+
+Good luck!
+ 
+
+
+\paragraph{Question 1.} (25 points)
+
+Suppose you are asked to evaluate the effect of a program that is designed to help disadvantaged schools to achieve better education outcomes. Program examples might be one of the following: textbook purchase; computer purchase; teacher training; variations in classroom size, etc. 
+
+\begin{enumerate}[(a)]
+	\item Tell us which program you would choose and why? Your task is to run a randomized experiment to evaluate the effect of the program (of your own choice).  Explain in detail how you would design the experiment and how you estimate the effect of the specific program you choose. In your answer mention:
+	\begin{enumerate}[i)]
+		\item How you set up the experiment.
+		\item Which variables would you collect?
+		\item Two factors that could potentially invalidate your experiment.
+		\item Explain how you would use the results from the experiment to evaluate the training effect
+	\end{enumerate}
+	\item{} Now suppose you have already run a successful experiment and would like to replicate the results from the experiment using non-experimental data.
+	\begin{enumerate}[i)]
+		\item Describe which setup (data collection, method) you would choose to do this.
+		\item List two estimation methods to estimate the treatment effect in the non-experimental data and explain how you would implement them. Write down the estimation equation for each method.
+		\item What is the advantage or disadvantage of the experiment over the non-experimental setup?
+	\end{enumerate}
+
+
+	\item Assume you could run two of the above programs, for example, both book and computer purchase. How would you test which one is more effective? Describe how would you approach the problem.
+
+
+\end{enumerate}
+
+\paragraph{Question 2.} (20 points)
+
+Evans and Schwab (1995) studied the effects of attending a Catholic high school on the probability of attending college. For concreteness, let $College_{i}$ be a binary variable equal to unity if a student attends college, and zero otherwise. Let $CathHS_{i}$ be a binary variable equal to one if the student attends a Catholic high school. The model to estimate is:
+\begin{equation*}
+	College_i = \alpha + \beta CathHS_i + X_i\gamma + u_i
+\end{equation*}
+
+where $X_i$ includes gender, race, family income, and parental education.
+\begin{enumerate}[(a)]
+\item Describe the advantages and disadvantages of using a linear probability model versus probit or logit model? Which estimation procedure would you choose and why?
+\item Why might $CathHS_{i}$ be correlated with $u_{i}$? In your opinion, how does the use of a logit (or probit) help addressing the endogeneity concerns? Explain.
+\item Evans and Schwab have data on a standardized test score taken when each student entered high school. What can be done with these variables to improve the
+ceteris paribus estimate of attending a Catholic high school?
+\item Let $CathRel_{i}$ be a binary variable equal to one if the student is Catholic. Discuss the two requirements needed for this to be a valid IV for $CathHS_{i}$ in the preceding equation. Which of these can be tested?
+\item Not surprisingly, being Catholic has a significant effect on attending a Catholic high school. Do you think $CathRel_i$ is a convincing instrument for $CathHS_{i}$?
+\item Assume now that $CathHS_{i}$ is measured with error. What are the classical measurement error assumptions? Do they hold in this case? 
+\item In which case is the inclusion of the mother’s education, in the estimating equation, problematic? Why? Motivate.
+\end{enumerate}
+
+\paragraph{Question 3.} (20 points)
+
+Malamud and Pop-Eleches (2011) estimate the effect of home computers on child and adolescent outcomes by exploiting a voucher program in Romania. 
+
+They analyze a government program administered by the Romanian Ministry of Education, which subsidized the purchase of home computers. The program awarded approximately 35,000 vouchers worth of EUR 200 in 2008 toward the purchase of a personal computer for low-income students enrolled in Romania’s public schools. The vouchers were allocated based on a simple ranking of family incomes. The income variable used is the monthly household income per family and families with income below 62.58 RON (Romanian Currency) were eligible for computer vouchers.
+
+\begin{enumerate}[(a)]
+\item  In your opinion, what type of estimation strategy do the authors employ to estimate the causal effect of computers on academic achievement? 
+\item  Write down the regression model you would use in this case. What type of design is this and why?
+\item  What are the main threats to the identification strategy? If you would have any data how would you test for potential threats to identification?
+\end{enumerate}
+
+
+\paragraph{Question 4.} (20 points)
+
+Goldin and Katz (JPE 2002) argue that an important reason for the spike in college participation of American women in the early 1970’s was the increased use of contraceptive pills by young single women. According to their argument, ``the pill'' allowed women to delay marriage and invest more into their careers. The increased use of ``the pill'' was due to the fact that state laws made it accessible only after the late 1960’s: 6 states introducing such laws in 1969, 16 other states in 1971, and the rest in 1974 or after.
+
+Goldin and Katz used panel data on U.S. states by year. The following linear regression is a good representation of one of their models:
+\begin{equation*}
+	M_{st} = X_{st}\beta + \gamma P_{st} + \alpha_s + \delta_t + w_{st}
+\end{equation*}
+where $s$ is state, $t$ is year, $M_{st}$ is the fraction of women who were married by age 23; $X_{st}$ are some control variables; $P_{st}$ is a dummy that is one if state $s$ in year $t$ allowed young single women to take ``the pill''; $\alpha_s$ are state fixed effects, and $\delta_t$ are year fixed effects. They estimated $\gamma$ to be negative and significant.
+
+\begin{enumerate}[(a)]
+	\item What is the reason for including state fixed effects?
+	\item What is the reason for including year fixed effects?
+	\item What is the meaning of $\gamma$?
+	\item What was the reason for applying the Fixed Effects method and not First Differences?
+	\item What assumptions about $w_{st}$ does the Fixed Effects estimator need in order to ensure that the estimate of $\gamma$ has causal interpretation?
+\end{enumerate}
+
+\paragraph{Question 5.} (15 points)
+
+True, false or no definite answer? Explain
+
+\begin{enumerate}[(a)]
+	\item In the tobit model, the marginal effect of $X$ on $Y$ varies across observations. 
+	\item Just like Heckman's method, propensity score matching addresses selection on unobservables. The main difference is that Heckman's method is dependent on distributional assumptions about the error terms.
+	\item Difference in differences can be used with repeated cross sections; having panel data is not required.
+\end{enumerate}
+
+\end{document}
