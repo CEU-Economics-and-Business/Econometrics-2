@@ -68,10 +68,11 @@ bysort cds: gen lag_average_score = average_score[_n-1]
 
 * Replicate outputs ************************************************************
 
-cd replication_output // change working directory to output folder
-
 
 * TABLE 5 **********************************************************************
+
+* solution 1: from the original code
+* note: this amount of repetition in code is actually not really good
 
 reg average_score ind norm ind_norm if norm < 19.099 & norm > -19.099 & year >= 2005, vce(robust)
 
@@ -109,18 +110,24 @@ reg readingscore ind norm ind_norm if norm < 19.099 & norm > -19.099 & year == 2
 
 
 
+* alternative 1: use loops
 
-* For bonus point: auto-generate it
+foreach Y of varlist average_score mathscore readingscore {
+	foreach timecondition in >=2005 ==2002 ==2003 ==2004 ==2005 ==2006 ==2007 ==2008 {
+		display "*** `Y' year`timecondition' ************"
+		regress `Y' ind norm ind_norm if norm < 19.099 & norm > -19.099 & year`timecondition', vce(robust)
+	}
+}
+
+
+
+* alternative 2 (for bonus points): use loops & auto-generate it
 
 * run regressions, store results
 foreach outcome in average_score mathscore readingscore {
-
-		eststo `outcome'allpost: qui reg `outcome' ind norm ind_norm if norm < 19.099 & norm > -19.099 & year >= 2005, vce(robust) 
-		forval y=2002/2004 {
-		eststo `outcome'`y': qui reg `outcome' ind norm ind_norm if norm < 19.099 & norm > -19.099 & year == `y', vce(robust)
-		}
-		forval y=2005/2008 {
-		eststo `outcome'`y': qui reg `outcome' ind norm ind_norm if norm < 19.099 & norm > -19.099 & year == `y', vce(robust)
+		eststo `outcome'allpost: quietly regress `outcome' ind norm ind_norm if norm < 19.099 & norm > -19.099 & year >= 2005, vce(robust) 
+		forval y=2002/2008 {
+		eststo `outcome'`y': quietly regress `outcome' ind norm ind_norm if norm < 19.099 & norm > -19.099 & year == `y', vce(robust)
 		}
 }
 
@@ -129,16 +136,16 @@ foreach outcome in average_score mathscore readingscore {
 
 * I generate the table from the stored results with 3 esttab commands
 * these are a bit different so I don't use a loop here
-esttab average_score* using "table5.csv", replace 							///		
+esttab average_score* using "replication_output/table5.csv", replace 		///		
 	b(%9.2f) se(%9.2f) coeflabels(ind "Average score")						///
 	drop(norm ind_norm _cons) noobs nostar nonotes							///
 	mtitles("All post years" "2002" "2003" "2004" "2005" "2006" "2007" "2008") 
-esttab mathscore* using "table5.csv", append nomtitles nonumbers 			///
+esttab mathscore*	 using "replication_output/table5.csv", append  		///
 	b(%9.2f) se(%9.2f) coeflabels(ind "Math")								///
-	drop(norm ind_norm _cons) noobs nostar nonotes	
-esttab mathscore* using "table5.csv", append nomtitles nonumbers 			///
+	drop(norm ind_norm _cons) noobs nostar nonotes nomtitles nonumbers
+esttab readingscore* using "replication_output/table5.csv", append  		///
 	b(%9.2f) se(%9.2f) coeflabels(ind "Reading")							///
-	drop(norm ind_norm _cons) noobs nostar nonotes	
+	drop(norm ind_norm _cons) noobs nostar nonotes nomtitles nonumbers
 
 /* Import this table to Excel (might need to set delimiter to comma).
 The output does not look 100% as the one in the paper, but it is very close
@@ -178,7 +185,7 @@ predict y_hat3 // predicted scores
 
 egen y_hat3_bin = mean(y_hat3) if year < 2005, by(bin) // collapse by bin
 twoway scatter  y_hat3_bin bin if bin < 50 & bin > -50 & year < 2005, ///  /* small window */
-	ylabel(#5) xline(0) xti("API in 2003 relative to cutoff") yti("Predicted test score") saving("figure1", replace)  // add vertical line
+	ylabel(#5) xline(0) xti("API in 2003 relative to cutoff") yti("Predicted test score") saving("replication_output/figure1", replace)  // add vertical line
 
 
 
@@ -187,14 +194,14 @@ twoway scatter  y_hat3_bin bin if bin < 50 & bin > -50 & year < 2005, ///  /* sm
 gen one = 1
 egen one_bin = total(one) if year ==2005, by(bin)  // egen total is same as egen sum (BUT NOT as gen sum)
 
-twoway scatter  one_bin bin if bin < 100 & bin > -100, ylabel(#5) /* ticks on y */  xline(0) xti("API in 2003 relative to cutoff") yti("Number of Schools") saving("figure2", replace)
+twoway scatter  one_bin bin if bin < 100 & bin > -100, ylabel(#5) /* ticks on y */  xline(0) xti("API in 2003 relative to cutoff") yti("Number of Schools") saving("replication_output/figure2", replace)
 
 
 
 * FIGURE 3, Panel A ************************************************************
 
 * if we can append data from the schedule we know that financial support was received
-merge m:1 cds using "../data-code/data/williams_full_apportionment_schedule.dta"
+merge m:1 cds using "data-code/data/williams_full_apportionment_schedule.dta"
 tab _merge
 gen list = 0
 replace list = 1 if _merge == 3
@@ -204,7 +211,7 @@ replace list = . if year != 2005
 
 egen list_bin = mean(list) , by(bin)
 
-scatter list_bin bin if year == 2005, xline(0) saving("figure3A", replace)
+scatter list_bin bin if year == 2005, xline(0) saving("replication_output/figure3A", replace)
 
 
 cap log close
